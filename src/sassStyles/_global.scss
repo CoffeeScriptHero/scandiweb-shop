@@ -1,0 +1,62 @@
+// ------ Fonts settings start
+
+@font-face {
+  font-family: "Raleway";
+  font-weight: 300;
+  src: local("Raleway"),
+    url(../assets/fonts/Raleway/Raleway-Light.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-weight: 400;
+  src: local("Raleway"),
+    url(../assets/fonts/Raleway/Raleway-Regular.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-weight: 500;
+  src: local("Raleway"),
+    url(../assets/fonts/Raleway/Raleway-Medium.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-weight: 600;
+  src: local("Raleway"),
+    url(../assets/fonts/Raleway/Raleway-SemiBold.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-weight: 700;
+  src: local("Raleway"),
+    url(../assets/fonts/Raleway/Raleway-Bold.woff) format("woff");
+}
+
+// ------ Fonts settings end
+
+// ------ CSS Global styles start
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  width: 1440px;
+  margin: 0 auto;
+}
+
+// ------ CSS Global styles start

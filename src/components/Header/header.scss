@@ -1,0 +1,58 @@
+@import "../../sassStyles/variables";
+@import "../../sassStyles/mixins";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-name-link {
+  @include textParameters($lineHeight: 19.2px);
+  text-transform: uppercase;
+  &:not(:last-of-type) {
+    margin-right: 32px;
+  }
+}
+
+.category-active-link {
+  position: relative;
+  @include textParameters(
+    $weight: 600,
+    $lineHeight: 19.2px,
+    $color: $base-color
+  );
+  &:after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: calc(100% + 32px);
+    background-color: $base-color;
+    top: 30px;
+    left: -16px;
+    right: 0;
+    margin: auto;
+  }
+}
+
+.categories-wrapper {
+  margin: 28px 0px 32px 101px;
+}
+
+.purchasing-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 101px;
+}
+
+.currencies-select {
+  margin-right: 15px;
+  width: 45px;
+  @include textParameters($size: 18px, $weight: 500, $lineHeight: 28.8px);
+  border: 0;
+  outline: none;
+  background: #fff;
+  & > option {
+    @include textParameters($size: 18px, $weight: 500, $lineHeight: 28.8px);
+  }
+}
