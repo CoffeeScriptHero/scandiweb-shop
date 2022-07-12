@@ -19,4 +19,18 @@ export const GET_CATEGORIES_NAMES = gql`
   }
 `;
 
-// export const GET_CATEGORY = gql``;
+export const GET_PRODUCTS = (categoryName) => {
+  return gql`
+    query {
+      category(input: { title: "${categoryName}" }) {
+        products {
+          id, name, inStock, gallery, description, prices {
+            currency {
+              label, symbol
+            } amount
+          } brand
+        }
+      }
+    }
+  `;
+};

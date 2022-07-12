@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todosReducer from "../features/todos/todosSlice";
-import filtersReducer from "../features/filters/filtersSlice";
+import currencyReducer from "./reducers/currency.slice";
+import categoryReducer from "./reducers/category.slice";
 
-export const store = configureStore({
+export default configureStore({
   reducer: {
-    todos: todosReducer,
-    filters: filtersReducer,
+    currency: currencyReducer,
+    category: categoryReducer,
   },
 });

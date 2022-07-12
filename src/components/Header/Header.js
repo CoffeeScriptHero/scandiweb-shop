@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "./header.scss";
+import { withParams } from "../../services/routerHooks";
 import logo from "../../assets/images/logo.png";
 import Icon from "../Icon/Icon";
-import { fetchCategories, fetchCurrencies } from "./headerSlice";
+import { fetchCategories } from "../../store/reducers/category.slice";
+import { fetchCurrencies } from "../../store/reducers/currency.slice";
 
 class Header extends Component {
   state = {
@@ -29,19 +31,23 @@ class Header extends Component {
   }
 
   render() {
-    const categoriesList = this.props.categories.map((c, i) => (
-      <Link
-        to={c}
-        key={i}
-        className={`category-name-link ${i ? "" : "category-active-link"}`}
-      >
-        {c}
-      </Link>
-    ));
+    const { currentCategory } = this.props;
+    const categoriesList = this.props.categories.map((c, i) => {
+      return (
+        <Link
+          to={c}
+          key={i}
+          className={`category-name-link ${
+            c === currentCategory ? "category-active-link" : ""
+          }`}
+        >
+          {c}
+        </Link>
+      );
+    });
 
     const currenciesList = this.props.currencies.map((c, i) => (
       <option className="currency-option" key={i} value={c.symbol}>
-        {/* {c.symbol} {c.label} */}
         {this.state.value === c.symbol ? c.symbol : `${c.symbol} ${c.label}`}
       </option>
     ));
@@ -71,8 +77,9 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    categories: state.header.categories,
-    currencies: state.header.currencies,
+    currencies: state.currency.currencies,
+    categories: state.category.categories,
+    currentCategory: state.category.currentCategory,
   };
 };
 
@@ -81,4 +88,4 @@ const mapDispatchToProps = {
   fetchCurrencies,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withParams(Header));
