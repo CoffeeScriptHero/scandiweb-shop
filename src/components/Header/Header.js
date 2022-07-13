@@ -6,7 +6,10 @@ import { withParams } from "../../services/routerHooks";
 import logo from "../../assets/images/logo.png";
 import Icon from "../Icon/Icon";
 import { fetchCategories } from "../../store/reducers/category.slice";
-import { fetchCurrencies } from "../../store/reducers/currency.slice";
+import {
+  fetchCurrencies,
+  changeCurrency,
+} from "../../store/reducers/currency.slice";
 
 class Header extends Component {
   state = {
@@ -22,6 +25,7 @@ class Header extends Component {
   };
 
   handleChange = (e) => {
+    this.props.changeCurrency(e.target.value);
     this.setState({ value: e.target.value });
   };
 
@@ -31,14 +35,14 @@ class Header extends Component {
   }
 
   render() {
-    const { currentCategory } = this.props;
+    const { category } = this.props;
     const categoriesList = this.props.categories.map((c, i) => {
       return (
         <Link
           to={c}
           key={i}
           className={`category-name-link ${
-            c === currentCategory ? "category-active-link" : ""
+            c === category ? "category-active-link" : ""
           }`}
         >
           {c}
@@ -79,13 +83,14 @@ const mapStateToProps = (state) => {
   return {
     currencies: state.currency.currencies,
     categories: state.category.categories,
-    currentCategory: state.category.currentCategory,
+    category: state.category.category,
   };
 };
 
 const mapDispatchToProps = {
   fetchCategories,
   fetchCurrencies,
+  changeCurrency,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withParams(Header));

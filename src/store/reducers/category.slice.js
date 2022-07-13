@@ -6,23 +6,19 @@ export const categorySlice = createSlice({
   name: "category",
   initialState: {
     categories: [],
-    products: [],
-    currentCategory: null,
+    category: null,
   },
   reducers: {
     categoriesAdd: (state, action) => {
       state.categories = action.payload;
     },
-    productsAdd: (state, action) => {
-      state.products = action.payload;
-    },
-    setCurrentCategory: (state, action) => {
-      state.currentCategory = action.payload;
+    setCategory: (state, action) => {
+      state.category = action.payload;
     },
   },
 });
 
-export const { categoriesAdd, productsAdd, setCurrentCategory } =
+export const { categoriesAdd, productsAdd, setCategory } =
   categorySlice.actions;
 
 export const fetchCategories = () => (dispatch) => {
@@ -34,7 +30,6 @@ export const fetchCategories = () => (dispatch) => {
 
 export const fetchProducts = (categoryName) => async (dispatch) => {
   return client.query({ query: GET_PRODUCTS(categoryName) }).then((result) => {
-    // dispatch(productsAdd(result.data.category.products));
     return result;
   });
 };

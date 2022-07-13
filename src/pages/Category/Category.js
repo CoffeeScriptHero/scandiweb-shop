@@ -3,11 +3,12 @@ import Loader from "../../components/Loader/Loader";
 import "./category.scss";
 import {
   fetchProducts,
-  setCurrentCategory,
+  setCategory,
 } from "../../store/reducers/category.slice";
 import { fetchCategories } from "../../store/reducers/category.slice";
 import { connect } from "react-redux";
 import { withParams } from "../../services/routerHooks";
+import Products from "../../components/Products/Products";
 
 class Category extends Component {
   state = {
@@ -16,27 +17,17 @@ class Category extends Component {
     products: [],
   };
 
-  // componentDidMount() {
-  //   const { fetchProducts, categories, path, setCurrentCategory } = this.props;
-
-  //   if (categories.includes(path)) {
-  //     setCurrentCategory(path);
-  //     fetchProducts(path).then((res) => {
-  //       this.setData(res.data.category.products);
-  //     });
-  //   } else {
-  //     this.setState({ isLoading: false, categoryExist: false });
-  //   }
-  // }
-
   componentDidUpdate(prevProps) {
     const path = this.props.params["*"];
-    const { fetchProducts, categories, setCurrentCategory } = this.props;
+    const { fetchProducts, categories, setCategory } = this.props;
 
-    if (prevProps.currentCategory !== path) {
-      setCurrentCategory(path);
-      if (this.state.isLoading) {
+    if (prevProps.category !== path) {
+      setCategory(path);
+      if (!categories.includes(path)) {
+        this.setState({ isLoading: false, categoryExist: false });
+      } else if (this.state.isLoading) {
         fetchProducts(path).then((res) => {
+          console.log(res.data.category.products);
           this.setData(res.data.category.products);
         });
       } else {
@@ -46,22 +37,25 @@ class Category extends Component {
   }
 
   setData = (data) => {
-    this.setState({ products: data, isLoading: !this.state.isLoading });
+    this.setState({
+      isLoading: false,
+      categoryExist: true,
+      products: data,
+    });
   };
 
   render() {
+    const { category, currency } = this.props;
+
     if (this.state.isLoading) return <Loader />;
     if (!this.state.categoryExist && !this.state.isLoading) {
       return <p>Not found!</p>;
     }
 
     return (
-      <div className="page">
-        {this.state.products.map((p) => (
-          <p key={p.id}>
-            {p.id} {p.name}
-          </p>
-        ))}
+      <div className="catalog">
+        <h2 className="catalog-title">{category}</h2>
+        <Products products={this.state.products} currency={currency} />
       </div>
     );
   }
@@ -70,14 +64,15 @@ class Category extends Component {
 const mapStateToProps = (state) => {
   return {
     categories: state.category.categories,
-    currentCategory: state.category.currentCategory,
+    category: state.category.category,
+    currency: state.currency.currency,
   };
 };
 
 const mapDispatchToProps = {
   fetchProducts,
   fetchCategories,
-  setCurrentCategory,
+  setCategory,
 };
 
 export default connect(

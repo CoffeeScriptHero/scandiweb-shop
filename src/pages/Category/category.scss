@@ -1,4 +1,14 @@
-.page {
-  position: relative;
-  height: 500px;
+@import "../../sassStyles/variables";
+@import "../../sassStyles/mixins";
+
+.catalog {
+  margin-top: 80px;
+}
+
+.catalog-title {
+  @include textParameters($size: 42px, $lineHeight: 67.2px);
+  margin-bottom: 100px;
+  &::first-letter {
+    text-transform: uppercase;
+  }
 }

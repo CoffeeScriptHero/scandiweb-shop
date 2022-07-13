@@ -1,0 +1,70 @@
+@import "../../sassStyles/variables";
+@import "../../sassStyles/mixins";
+
+.product-card {
+  display: inline-block;
+  padding: 16px;
+  &:not(:nth-of-type(3n)) {
+    margin-right: 40px;
+  }
+  &:nth-of-type(n + 4) {
+    margin-top: 100px;
+  }
+  &:hover {
+    box-shadow: 0px 4px 35px $card-shadow-color;
+    .card-purchase-btn {
+      display: flex;
+    }
+  }
+}
+.card-img-wrapper {
+  position: relative;
+  margin-bottom: 24px;
+  width: 354px;
+  height: 330px;
+}
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card-name {
+  @include textParameters($size: 18px, $lineHeight: 28.8px);
+  max-width: 354px;
+}
+.card-price {
+  @include textParameters($size: 18px, $lineHeight: 29px, $weight: 500);
+}
+.card-purchase-btn {
+  background-color: $base-color;
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 52px;
+  height: 52px;
+  border-radius: 100%;
+  right: 18px;
+  bottom: -26px;
+}
+.out-of-stock {
+  color: $card-grey-color;
+}
+.img-opacity {
+  opacity: 47%;
+}
+.img-out-of-stock-text {
+  &:after {
+    content: "OUT OF STOCK";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include textParameters(
+      $size: 24px,
+      $lineHeight: 38.4px,
+      $color: $card-grey-color
+    );
+  }
+}
