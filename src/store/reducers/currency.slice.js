@@ -6,7 +6,7 @@ export const currencySlice = createSlice({
   name: "currency",
   initialState: {
     currencies: [],
-    currency: "$",
+    currency: localStorage.getItem("currency") || "$",
   },
   reducers: {
     currenciesAdd: (state, action) => {

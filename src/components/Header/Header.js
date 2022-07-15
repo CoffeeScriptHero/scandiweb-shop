@@ -10,12 +10,9 @@ import {
   fetchCurrencies,
   changeCurrency,
 } from "../../store/reducers/currency.slice";
+import Select from "../Select/Select";
 
 class Header extends Component {
-  state = {
-    value: "$",
-  };
-
   handleClick = (e) => {
     if (e.target.tagName === "A") {
       const activeLink = document.querySelector(".category-active-link");
@@ -24,9 +21,9 @@ class Header extends Component {
     }
   };
 
-  handleChange = (e) => {
-    this.props.changeCurrency(e.target.value);
-    this.setState({ value: e.target.value });
+  optionHandler = (value) => {
+    this.props.changeCurrency(value);
+    localStorage.setItem("currency", value);
   };
 
   componentDidMount() {
@@ -50,11 +47,10 @@ class Header extends Component {
       );
     });
 
-    const currenciesList = this.props.currencies.map((c, i) => (
-      <option className="currency-option" key={i} value={c.symbol}>
-        {this.state.value === c.symbol ? c.symbol : `${c.symbol} ${c.label}`}
-      </option>
-    ));
+    const currenciesList = this.props.currencies.map((c) => ({
+      value: c.symbol,
+      content: `${c.symbol} ${c.label}`,
+    }));
 
     return (
       <header className="header">
@@ -65,14 +61,13 @@ class Header extends Component {
           <img className="logo" src={logo} alt="scandiweb shop logo" />
         </div>
         <div className="purchasing-wrapper">
-          <select
-            className="currencies-select"
-            value={this.state.value}
-            onChange={this.handleChange}
-          >
-            {!!currenciesList && currenciesList}
-          </select>
-          <Icon type="cart" />
+          <Select
+            options={!!currenciesList.length ? currenciesList : []}
+            handleClick={this.optionHandler}
+          />
+          <div className="header-cart-icon">
+            <Icon type="cart" />
+          </div>
         </div>
       </header>
     );

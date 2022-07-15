@@ -27,7 +27,6 @@ class Category extends Component {
         this.setState({ isLoading: false, categoryExist: false });
       } else if (this.state.isLoading) {
         fetchProducts(path).then((res) => {
-          console.log(res.data.category.products);
           this.setData(res.data.category.products);
         });
       } else {

@@ -6,7 +6,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
 .category-name-link {
   @include textParameters($lineHeight: 19.2px);
   text-transform: uppercase;
@@ -14,7 +13,6 @@
     margin-right: 32px;
   }
 }
-
 .category-active-link {
   position: relative;
   @include textParameters(
@@ -34,24 +32,13 @@
     margin: auto;
   }
 }
-
 .categories-wrapper {
   margin: 28px 0px 32px 0px;
 }
-
 .purchasing-wrapper {
   display: flex;
   align-items: center;
 }
-
-.currencies-select {
-  margin-right: 15px;
-  width: 45px;
-  @include textParameters($size: 18px, $weight: 500, $lineHeight: 28.8px);
-  border: 0;
-  outline: none;
-  background: #fff;
-  & > option {
-    @include textParameters($size: 18px, $weight: 500, $lineHeight: 28.8px);
-  }
+.header-cart-icon {
+  margin-left: 22px;
 }
