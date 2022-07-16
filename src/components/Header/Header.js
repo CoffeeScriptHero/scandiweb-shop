@@ -5,7 +5,10 @@ import "./header.scss";
 import { withParams } from "../../services/routerHooks";
 import logo from "../../assets/images/logo.png";
 import Icon from "../Icon/Icon";
-import { fetchCategories } from "../../store/reducers/category.slice";
+import {
+  fetchCategories,
+  setCategory,
+} from "../../store/reducers/category.slice";
 import {
   fetchCurrencies,
   changeCurrency,
@@ -36,7 +39,7 @@ class Header extends Component {
     const categoriesList = this.props.categories.map((c, i) => {
       return (
         <Link
-          to={c}
+          to={`/${c}`}
           key={i}
           className={`category-name-link ${
             c === category ? "category-active-link" : ""
@@ -84,6 +87,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchCategories,
+  setCategory,
   fetchCurrencies,
   changeCurrency,
 };

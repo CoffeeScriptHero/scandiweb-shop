@@ -1,4 +1,5 @@
 import React, { Component, createRef } from "react";
+import { Link } from "react-router-dom";
 import Icon from "../Icon/Icon";
 import "./product.scss";
 
@@ -28,25 +29,30 @@ class Product extends Component {
             inStock ? "" : "img-out-of-stock-text"
           }`}
         >
-          <img
-            className={`card-img ${inStock ? "" : "img-opacity"}`}
-            src={gallery[0]}
-            alt={name}
-          />
-          {inStock && (
-            <div className="card-purchase-btn" ref={this.btnRef}>
-              <Icon
-                type={this.state.addedToCart ? "checkmark" : "cart"}
-                fill="white"
-                width="24px"
-                height="24px"
-              />
-            </div>
-          )}
+          <Link to={`/p/${id}`}>
+            <img
+              className={`card-img ${inStock ? "" : "img-opacity"}`}
+              src={gallery[0]}
+              alt={name}
+            />
+            {inStock && (
+              <div className="card-purchase-btn" ref={this.btnRef}>
+                <Icon
+                  type={this.state.addedToCart ? "checkmark" : "cart"}
+                  fill="white"
+                  width="24px"
+                  height="24px"
+                />
+              </div>
+            )}
+          </Link>
         </div>
-        <h3 className={`card-name ${inStock ? "" : "out-of-stock"}`}>
+        <Link
+          to={`/p/${id}`}
+          className={`card-name-link ${inStock ? "" : "out-of-stock"}`}
+        >
           {brand} {name}
-        </h3>
+        </Link>
         <span className={`card-price ${inStock ? "" : "out-of-stock"}`}>
           {currency} {price}
         </span>

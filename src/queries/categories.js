@@ -34,3 +34,17 @@ export const GET_PRODUCTS = (categoryName) => {
     }
   `;
 };
+
+export const GET_PRODUCT = (productName) => {
+  return gql`
+    query {
+      product(id: "${productName}") {
+        name, brand, inStock, gallery, description, attributes {
+          id, name, type, items {
+            displayValue, value, id
+          }
+        }
+      }
+    }
+  `;
+};

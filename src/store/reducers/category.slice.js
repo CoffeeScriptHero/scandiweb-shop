@@ -28,10 +28,4 @@ export const fetchCategories = () => (dispatch) => {
   });
 };
 
-export const fetchProducts = (categoryName) => async (dispatch) => {
-  return client.query({ query: GET_PRODUCTS(categoryName) }).then((result) => {
-    return result;
-  });
-};
-
 export default categorySlice.reducer;

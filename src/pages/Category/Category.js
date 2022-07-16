@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
 import "./category.scss";
-import {
-  fetchProducts,
-  setCategory,
-} from "../../store/reducers/category.slice";
+import { setCategory } from "../../store/reducers/category.slice";
+import { getProducts } from "../../services/requests";
 import { fetchCategories } from "../../store/reducers/category.slice";
 import { connect } from "react-redux";
 import { withParams } from "../../services/routerHooks";
@@ -17,16 +15,22 @@ class Category extends Component {
     products: [],
   };
 
+  // componentDidMount() {
+  //   if (this.props.category) {
+  //     this.props.setCategory(null);
+  //   }
+  // }
+
   componentDidUpdate(prevProps) {
     const path = this.props.params["*"];
-    const { fetchProducts, categories, setCategory } = this.props;
-
+    const { categories, setCategory } = this.props;
+    console.log(prevProps.category, path);
     if (prevProps.category !== path) {
       setCategory(path);
       if (!categories.includes(path)) {
         this.setState({ isLoading: false, categoryExist: false });
       } else if (this.state.isLoading) {
-        fetchProducts(path).then((res) => {
+        getProducts(path).then((res) => {
           this.setData(res.data.category.products);
         });
       } else {
@@ -44,6 +48,7 @@ class Category extends Component {
   };
 
   render() {
+    console.log(this.props, "\n", this.state);
     const { category, currency } = this.props;
 
     if (this.state.isLoading) return <Loader />;
@@ -69,7 +74,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchProducts,
   fetchCategories,
   setCategory,
 };
