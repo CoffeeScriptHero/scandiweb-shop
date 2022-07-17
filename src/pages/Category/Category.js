@@ -3,7 +3,6 @@ import Loader from "../../components/Loader/Loader";
 import "./category.scss";
 import { setCategory } from "../../store/reducers/category.slice";
 import { getProducts } from "../../services/requests";
-import { fetchCategories } from "../../store/reducers/category.slice";
 import { connect } from "react-redux";
 import { withParams } from "../../services/routerHooks";
 import Products from "../../components/Products/Products";
@@ -11,33 +10,9 @@ import Products from "../../components/Products/Products";
 class Category extends Component {
   state = {
     isLoading: true,
-    categoryExist: true,
+    categoryExist: false,
     products: [],
   };
-
-  // componentDidMount() {
-  //   if (this.props.category) {
-  //     this.props.setCategory(null);
-  //   }
-  // }
-
-  componentDidUpdate(prevProps) {
-    const path = this.props.params["*"];
-    const { categories, setCategory } = this.props;
-    console.log(prevProps.category, path);
-    if (prevProps.category !== path) {
-      setCategory(path);
-      if (!categories.includes(path)) {
-        this.setState({ isLoading: false, categoryExist: false });
-      } else if (this.state.isLoading) {
-        getProducts(path).then((res) => {
-          this.setData(res.data.category.products);
-        });
-      } else {
-        this.setState({ isLoading: true });
-      }
-    }
-  }
 
   setData = (data) => {
     this.setState({
@@ -47,12 +22,37 @@ class Category extends Component {
     });
   };
 
+  fetchData = () => {
+    const path = this.props.params["*"];
+
+    getProducts(path).then((res) => {
+      if (res.data.category) {
+        this.setData(res.data.category.products);
+      } else {
+        this.setState({ isLoading: false, categoryExist: false });
+      }
+    });
+  };
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    const path = this.props.params["*"];
+    const { setCategory } = this.props;
+
+    if (prevProps.category !== path) {
+      setCategory(path);
+      this.fetchData();
+    }
+  }
+
   render() {
-    console.log(this.props, "\n", this.state);
     const { category, currency } = this.props;
 
     if (this.state.isLoading) return <Loader />;
-    if (!this.state.categoryExist && !this.state.isLoading) {
+    if (!this.state.categoryExist) {
       return <p>Not found!</p>;
     }
 
@@ -74,7 +74,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchCategories,
   setCategory,
 };
 

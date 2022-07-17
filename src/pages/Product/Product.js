@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
 import { getProduct } from "../../services/requests";
 import { withParams } from "../../services/routerHooks";
+import { setCategory } from "../../store/reducers/category.slice";
+import { connect } from "react-redux";
 import "./product.scss";
 
 class Product extends Component {
@@ -20,14 +22,22 @@ class Product extends Component {
   };
 
   componentDidMount() {
+    const { categories, setCategory } = this.props;
     const id = this.props.params.id;
-    getProduct(id).then((res) =>
+    getProduct(id).then((res) => {
+      const product = res.data.product;
+
+      if (!categories.length) {
+        // highlights category in header if we followed the link of the product (not opened it from category page)
+        setCategory(product.category ? product.category : null);
+      }
+
       this.setState({
         isLoading: false,
-        product: res.data.product,
-        imageToShow: res.data.product ? res.data.product.gallery[0] : null,
-      })
-    );
+        product: product,
+        imageToShow: product ? product.gallery[0] : null,
+      });
+    });
   }
 
   render() {
@@ -70,4 +80,17 @@ class Product extends Component {
   }
 }
 
-export default withParams(Product);
+const mapStateToProps = (state) => {
+  return {
+    categories: state.category.categories,
+  };
+};
+
+const mapDispatchToProps = {
+  setCategory,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withParams(Product));

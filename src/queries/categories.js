@@ -42,8 +42,8 @@ export const GET_PRODUCT = (productName) => {
         name, brand, inStock, gallery, description, attributes {
           id, name, type, items {
             displayValue, value, id
-          }
-        }
+          } 
+        } category
       }
     }
   `;
