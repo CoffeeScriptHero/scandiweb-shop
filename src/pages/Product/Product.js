@@ -12,6 +12,7 @@ class Product extends Component {
     isLoading: true,
     product: null,
     imageToShow: null,
+    attributes: {},
   };
 
   imagesHandler = (e) => {
@@ -19,6 +20,16 @@ class Product extends Component {
       document.querySelector(".active-image").classList.remove("active-image");
       e.target.classList.add("active-image");
       this.setState({ imageToShow: e.target.src });
+    }
+  };
+
+  attributeHandler = (e) => {
+    const targetClassList = Array.from(e.target.classList);
+    if (targetClassList.includes("attribute")) {
+      e.target.parentNode
+        .querySelector(`.attribute-active`)
+        .classList.remove("attribute-active");
+      e.target.classList.add("attribute-active");
     }
   };
 
@@ -54,6 +65,19 @@ class Product extends Component {
         setCategory(product.category ? product.category : null);
       }
 
+      const attrs = res.data.product.attributes;
+
+      console.log(attrs);
+
+      attrs.forEach((a) => {
+        this.setState((prevState) => ({
+          attributes: {
+            ...prevState.attributes,
+            [a.name]: a.items[0].value,
+          },
+        }));
+      });
+
       this.setState({
         isLoading: false,
         product: product,
@@ -69,6 +93,48 @@ class Product extends Component {
     const { brand, name, gallery, attributes, desciption, inStock } =
       this.state.product;
 
+    console.log(this.state);
+
+    // console.log(attributes);
+
+    const imagesList = gallery.map((img, i) => (
+      <div key={i} className="aside-image-wrapper">
+        <img
+          className={`product-aside-image ${i === 0 ? "active-image" : ""}`}
+          src={img}
+          alt="aside product image"
+        />
+      </div>
+    ));
+
+    const attributesList = attributes.map((a) => {
+      return (
+        <div
+          className="attribute-wrapper"
+          key={a.id}
+          onClick={this.attributeHandler}
+        >
+          <h6 className="attribute-title">{a.name}</h6>
+          <div className="attribute-content">
+            {a.items.map((i, index) => (
+              <div
+                key={i.id}
+                // data-name={i.name}
+                className={`attribute 
+                ${a.type === "text" ? "text-attribute" : "swatch-attribute"} 
+                ${index === 0 ? "attribute-active" : ""}`}
+                style={{
+                  backgroundColor: a.type === "swatch" ? i.value : "",
+                }}
+              >
+                {a.type === "text" ? i.displayValue : ""}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    });
+
     return (
       <div className="product-page">
         <div className="aside-wrapper">
@@ -81,18 +147,7 @@ class Product extends Component {
             </div>
           )}
           <aside className="product-aside-images" onClick={this.imagesHandler}>
-            {gallery.map((img, i) => (
-              <div key={i} className={`aside-image-wrapper`}>
-                <img
-                  className={`product-aside-image ${
-                    i === 0 ? "active-image" : ""
-                  }
-                  `}
-                  src={img}
-                  alt="aside product image"
-                />
-              </div>
-            ))}
+            {imagesList}
           </aside>
           {gallery.length > 4 && (
             <div
@@ -113,6 +168,9 @@ class Product extends Component {
         <div className="product-info-wrapper">
           <h1 className="product-title">{brand}</h1>
           <h2 className="product-name">{name}</h2>
+          {!!attributesList.length && (
+            <div className="attributes-wrapper">{attributesList}</div>
+          )}
         </div>
       </div>
     );

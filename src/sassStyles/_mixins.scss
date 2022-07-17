@@ -3,11 +3,13 @@
 @mixin textParameters(
   $size: 16px,
   $weight: 400,
-  $lineHeight: 16,
-  $color: $dark-color
+  $lineHeight: 16px,
+  $color: $dark-color,
+  $fontFamily: "Raleway"
 ) {
   font-size: $size;
   font-weight: $weight;
   line-height: $lineHeight;
   color: $color;
+  font-family: $fontFamily;
 }
