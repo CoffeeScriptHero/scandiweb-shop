@@ -4,20 +4,40 @@
   padding-top: 82px;
   display: flex;
 }
+.aside-wrapper {
+  position: relative;
+}
 .product-aside-images {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
+  overflow-y: hidden;
+  z-index: 1;
+  height: 416px;
+}
+.aside-scroll-arrow {
+  position: absolute;
+  left: 50%;
+}
+.arrow-top {
+  top: -43px;
+  transform: translateX(-50%) scaleY(-1);
+}
+.arrow-bottom {
+  bottom: 53px;
+  transform: translateX(-50%);
 }
 .aside-image-wrapper {
-  width: 79px;
-  height: 80px;
+  min-height: 80px;
+  min-width: 79px;
+  max-height: 80px;
+  max-width: 79px;
   &:not(:nth-last-of-type(1)) {
     margin-bottom: 32px;
   }
 }
 .product-aside-image {
   border: 1px solid transparent;
-
+  user-select: none;
   width: 100%;
   height: 100%;
   object-fit: cover;

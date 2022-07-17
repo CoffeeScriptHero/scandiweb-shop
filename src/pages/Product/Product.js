@@ -5,6 +5,7 @@ import { withParams } from "../../services/routerHooks";
 import { setCategory } from "../../store/reducers/category.slice";
 import { connect } from "react-redux";
 import "./product.scss";
+import Icon from "../../components/Icon/Icon";
 
 class Product extends Component {
   state = {
@@ -18,6 +19,27 @@ class Product extends Component {
       document.querySelector(".active-image").classList.remove("active-image");
       e.target.classList.add("active-image");
       this.setState({ imageToShow: e.target.src });
+    }
+  };
+
+  arrowHandler = (e) => {
+    const isTopArrow = document.querySelector(".arrow-top").contains(e.target);
+    const content = document.querySelector(".product-aside-images");
+    const image = content.children[0];
+    const imageHeight = parseInt(window.getComputedStyle(image).height);
+    const imageMargin = parseInt(window.getComputedStyle(image).marginBottom);
+    const scrollNumber = imageHeight + imageMargin;
+
+    if (isTopArrow) {
+      content.scrollTo({
+        top: content.scrollTop - scrollNumber,
+        behavior: "smooth",
+      });
+    } else if (content.scrollTopMax - content.scrollTop >= scrollNumber) {
+      content.scrollTo({
+        top: content.scrollTop + scrollNumber,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -49,21 +71,38 @@ class Product extends Component {
 
     return (
       <div className="product-page">
-        <aside className="product-aside-images" onClick={this.imagesHandler}>
-          {gallery.map((img, i) => (
+        <div className="aside-wrapper">
+          {gallery.length > 4 && (
             <div
-              key={i}
-              className={`aside-image-wrapper 
-            ${i === 0 ? "active-image" : ""}`}
+              className="aside-scroll-arrow arrow-top"
+              onClick={this.arrowHandler}
             >
-              <img
-                className="product-aside-image"
-                src={img}
-                alt="aside product image"
-              />
+              <Icon type="scrollarrow" />
             </div>
-          ))}
-        </aside>
+          )}
+          <aside className="product-aside-images" onClick={this.imagesHandler}>
+            {gallery.map((img, i) => (
+              <div key={i} className={`aside-image-wrapper`}>
+                <img
+                  className={`product-aside-image ${
+                    i === 0 ? "active-image" : ""
+                  }
+                  `}
+                  src={img}
+                  alt="aside product image"
+                />
+              </div>
+            ))}
+          </aside>
+          {gallery.length > 4 && (
+            <div
+              className="aside-scroll-arrow arrow-bottom"
+              onClick={this.arrowHandler}
+            >
+              <Icon type="scrollarrow" />
+            </div>
+          )}
+        </div>
         <div className="main-image-wrapper">
           <img
             className="product-main-image"
