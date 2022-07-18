@@ -7,25 +7,25 @@
 }
 .aside-wrapper {
   position: relative;
+  height: 416px;
 }
 .product-aside-images {
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
-  z-index: 1;
-  height: 416px;
+  height: 100%;
 }
 .aside-scroll-arrow {
   position: absolute;
   left: 50%;
-}
-.arrow-top {
-  top: -43px;
-  transform: translateX(-50%) scaleY(-1);
-}
-.arrow-bottom {
-  bottom: 53px;
-  transform: translateX(-50%);
+  &.arrow-top {
+    top: -43px;
+    transform: translateX(-50%) scaleY(-1);
+  }
+  &.arrow-bottom {
+    bottom: -43px;
+    transform: translateX(-50%);
+  }
 }
 .aside-image-wrapper {
   min-height: 80px;
@@ -59,6 +59,9 @@
   object-fit: cover;
   object-position: 40% 60%;
 }
+.product-info-wrapper {
+  max-width: 293px;
+}
 .product-title {
   @include textParameters($size: 30px, $lineHeight: 27px, $weight: 600);
   margin-bottom: 16px;
@@ -67,53 +70,41 @@
   @include textParameters($size: 30px, $lineHeight: 27px);
   margin-bottom: 43px;
 }
-.attribute-wrapper {
-  &:not(:nth-last-of-type(1)) {
-    margin-bottom: 24px;
-  }
-}
-.attribute {
-  cursor: pointer;
-}
-.text-attribute {
-  @include textParameters(
-    $lineHeight: 18px,
-    $fontFamily: "Source Sans Pro",
-    $color: $text-attribute-color
-  );
-  border: 1px solid $dark-color;
-  padding: 13px 22px 14px 23px;
-  background-color: $white-color;
-  &:not(:nth-last-of-type(1)) {
-    margin-right: 12px;
-  }
-  &.attribute-active {
-    background-color: $dark-color;
-    color: $white-color;
-  }
-}
-.swatch-attribute {
-  width: 36px;
-  height: 36px;
-  outline-offset: 1px;
-  &:not(:nth-last-of-type(1)) {
-    margin-right: 8px;
-  }
-  &.attribute-active {
-    outline: 1px solid $base-color;
-  }
-}
-.attribute-content {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
-.attribute-title {
+.product-price-title {
   @include textParameters(
     $size: 18px,
     $lineHeight: 18px,
+    $weight: 700,
     $fontFamily: "Roboto Condensed"
   );
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-top: 38px;
+  margin-bottom: 20px;
+}
+.product-price {
+  display: block;
+  @include textParameters($size: 24px, $weight: 700, $lineHeight: 18px);
+}
+.product-cart-button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: block;
+  @include textParameters(
+    $lineHeight: 19.2px,
+    $weight: 600,
+    $color: $white-color
+  );
+  text-transform: uppercase;
+  background-color: $base-color;
+  padding: 16px 93.5px;
+  margin-top: 39px;
+  margin-bottom: 56px;
+}
+.product-description {
+  @include textParameters($lineHeight: 25.59px, $fontFamily: "Roboto");
+  max-height: 200px;
+  padding-right: 5px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }

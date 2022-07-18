@@ -6,6 +6,7 @@ import { setCategory } from "../../store/reducers/category.slice";
 import { connect } from "react-redux";
 import "./product.scss";
 import Icon from "../../components/Icon/Icon";
+import Attributes from "../../components/Attributes/Attributes";
 
 class Product extends Component {
   state = {
@@ -23,13 +24,20 @@ class Product extends Component {
     }
   };
 
-  attributeHandler = (e) => {
+  attributesHandler = (e) => {
     const targetClassList = Array.from(e.target.classList);
     if (targetClassList.includes("attribute")) {
       e.target.parentNode
         .querySelector(`.attribute-active`)
         .classList.remove("attribute-active");
       e.target.classList.add("attribute-active");
+
+      this.setState((prevState) => ({
+        attributes: {
+          ...prevState.attributes,
+          [e.target.dataset.name]: e.target.dataset.value,
+        },
+      }));
     }
   };
 
@@ -67,8 +75,6 @@ class Product extends Component {
 
       const attrs = res.data.product.attributes;
 
-      console.log(attrs);
-
       attrs.forEach((a) => {
         this.setState((prevState) => ({
           attributes: {
@@ -90,12 +96,14 @@ class Product extends Component {
     if (this.state.isLoading) return <Loader />;
     if (!this.state.isLoading && !this.state.product) return <p>Not found</p>;
 
-    const { brand, name, gallery, attributes, desciption, inStock } =
+    const { currency } = this.props;
+    const { brand, name, gallery, prices, attributes, description, inStock } =
       this.state.product;
+    const price = prices.filter((p) => p.currency.symbol === currency)[0]
+      .amount;
 
-    console.log(this.state);
-
-    // console.log(attributes);
+    const descriptionElement = document.createElement("div");
+    descriptionElement.innerHTML = description;
 
     const imagesList = gallery.map((img, i) => (
       <div key={i} className="aside-image-wrapper">
@@ -106,34 +114,6 @@ class Product extends Component {
         />
       </div>
     ));
-
-    const attributesList = attributes.map((a) => {
-      return (
-        <div
-          className="attribute-wrapper"
-          key={a.id}
-          onClick={this.attributeHandler}
-        >
-          <h6 className="attribute-title">{a.name}</h6>
-          <div className="attribute-content">
-            {a.items.map((i, index) => (
-              <div
-                key={i.id}
-                // data-name={i.name}
-                className={`attribute 
-                ${a.type === "text" ? "text-attribute" : "swatch-attribute"} 
-                ${index === 0 ? "attribute-active" : ""}`}
-                style={{
-                  backgroundColor: a.type === "swatch" ? i.value : "",
-                }}
-              >
-                {a.type === "text" ? i.displayValue : ""}
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    });
 
     return (
       <div className="product-page">
@@ -168,9 +148,20 @@ class Product extends Component {
         <div className="product-info-wrapper">
           <h1 className="product-title">{brand}</h1>
           <h2 className="product-name">{name}</h2>
-          {!!attributesList.length && (
-            <div className="attributes-wrapper">{attributesList}</div>
+          {!!Object.keys(attributes).length && (
+            <Attributes
+              attributes={attributes}
+              onClick={this.attributesHandler}
+            />
           )}
+          <h6 className="product-price-title">Price:</h6>
+          <span className="product-price">
+            {currency} {price}
+          </span>
+          <button className="product-cart-button">Add to cart</button>
+          <div className="product-description">
+            {descriptionElement.textContent}
+          </div>
         </div>
       </div>
     );
@@ -179,6 +170,7 @@ class Product extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    currency: state.currency.currency,
     categories: state.category.categories,
   };
 };

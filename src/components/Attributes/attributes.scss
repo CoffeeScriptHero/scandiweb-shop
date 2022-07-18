@@ -1,0 +1,53 @@
+@import "../../sassStyles/variables";
+@import "../../sassStyles/mixins";
+
+.attribute-wrapper {
+  &:not(:nth-last-of-type(1)) {
+    margin-bottom: 24px;
+  }
+}
+.attribute {
+  cursor: pointer;
+}
+.text-attribute {
+  @include textParameters(
+    $lineHeight: 18px,
+    $fontFamily: "Source Sans Pro",
+    $color: $text-attribute-color
+  );
+  border: 1px solid $dark-color;
+  padding: 13px 22px 14px 23px;
+  background-color: $white-color;
+  &:not(:nth-last-of-type(1)) {
+    margin-right: 12px;
+  }
+  &.attribute-active {
+    background-color: $dark-color;
+    color: $white-color;
+  }
+}
+.swatch-attribute {
+  width: 36px;
+  height: 36px;
+  outline-offset: 1px;
+  &:not(:nth-last-of-type(1)) {
+    margin-right: 8px;
+  }
+  &.attribute-active {
+    outline: 1px solid $base-color;
+  }
+}
+.attribute-content {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.attribute-title {
+  @include textParameters(
+    $size: 18px,
+    $lineHeight: 18px,
+    $fontFamily: "Roboto Condensed"
+  );
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
