@@ -85,11 +85,28 @@
   display: block;
   @include textParameters($size: 24px, $weight: 700, $lineHeight: 18px);
 }
+.no_product_text {
+  @include textParameters(
+    $size: 24px,
+    $fontFamily: "Roboto Condensed",
+    $weight: 700,
+    $lineHeight: 20px,
+    $color: $out-of-stock-color
+  );
+  text-transform: uppercase;
+  margin-top: 35px;
+  margin-bottom: 30px;
+}
 .product-cart-button {
+  width: 292px;
+  height: 52px;
   outline: none;
   border: none;
   cursor: pointer;
-  display: block;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @include textParameters(
     $lineHeight: 19.2px,
     $weight: 600,
@@ -97,7 +114,6 @@
   );
   text-transform: uppercase;
   background-color: $base-color;
-  padding: 16px 93.5px;
   margin-top: 39px;
   margin-bottom: 56px;
 }

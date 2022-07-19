@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
 import "./category.scss";
+import { productSave, productRemove } from "../../store/reducers/cart.slice";
 import { setCategory } from "../../store/reducers/category.slice";
 import { getProducts } from "../../services/requests";
 import { connect } from "react-redux";
@@ -49,7 +50,7 @@ class Category extends Component {
   }
 
   render() {
-    const { category, currency } = this.props;
+    const { category, currency, cart, productSave, productRemove } = this.props;
 
     if (this.state.isLoading) return <Loader />;
     if (!this.state.categoryExist) {
@@ -59,7 +60,13 @@ class Category extends Component {
     return (
       <div className="catalog">
         <h2 className="catalog-title">{category}</h2>
-        <Products products={this.state.products} currency={currency} />
+        <Products
+          products={this.state.products}
+          currency={currency}
+          productSave={productSave}
+          productRemove={productRemove}
+          cart={cart}
+        />
       </div>
     );
   }
@@ -67,14 +74,16 @@ class Category extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    categories: state.category.categories,
     category: state.category.category,
     currency: state.currency.currency,
+    cart: state.cart,
   };
 };
 
 const mapDispatchToProps = {
   setCategory,
+  productSave,
+  productRemove,
 };
 
 export default connect(

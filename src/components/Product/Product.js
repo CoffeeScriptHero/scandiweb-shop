@@ -1,15 +1,17 @@
 import React, { Component, createRef } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../Icon/Icon";
+import { addToCart } from "../../services/cart";
 import "./product.scss";
 
 class Product extends Component {
-  state = { addedToCart: false };
+  storageCart = JSON.parse(localStorage.getItem("cart"));
+  state = {
+    addedToCart: this.storageCart
+      ? this.storageCart.find((p) => p.id === this.props.id)
+      : false,
+  };
   btnRef = createRef();
-
-  // addToCart = () => {
-
-  // }
 
   componentDidMount() {
     if (this.btnRef.current) {
@@ -21,7 +23,19 @@ class Product extends Component {
   }
 
   render() {
-    const { id, name, brand, inStock, gallery, prices, currency } = this.props;
+    const {
+      attributes,
+      cart,
+      productSave,
+      productRemove,
+      id,
+      name,
+      brand,
+      inStock,
+      gallery,
+      prices,
+      currency,
+    } = this.props;
 
     const price = prices.filter((p) => p.currency.symbol === currency)[0]
       .amount;
@@ -44,7 +58,14 @@ class Product extends Component {
             <div
               className="card-purchase-btn"
               ref={this.btnRef}
-              onClick={this.addToCart}
+              onClick={addToCart.bind(
+                this,
+                id,
+                attributes,
+                cart,
+                productSave,
+                productRemove
+              )}
             >
               <Icon
                 type={this.state.addedToCart ? "checkmark" : "cart"}

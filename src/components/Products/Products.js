@@ -1,12 +1,12 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import Product from "../Product/Product";
 import "./products.scss";
 
 class Products extends Component {
   render() {
-    const { products, currency } = this.props;
+    const { products, currency, cart, productSave, productRemove } = this.props;
 
-    const productsList = products.map((p, i) => (
+    const productsList = products.map((p) => (
       <Product
         key={p.id}
         id={p.id}
@@ -17,6 +17,9 @@ class Products extends Component {
         prices={p.prices}
         currency={currency}
         attributes={p.attributes}
+        productSave={productSave}
+        productRemove={productRemove}
+        cart={cart}
       />
     ));
 

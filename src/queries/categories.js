@@ -43,7 +43,7 @@ export const GET_PRODUCT = (productName) => {
   return gql`
     query {
       product(id: "${productName}") {
-         name, brand, inStock, category, gallery, description, attributes {
+         id, name, brand, inStock, category, gallery, description, attributes {
           id, name, type, items {
             displayValue, value, id
           } 

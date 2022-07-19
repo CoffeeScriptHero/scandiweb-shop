@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
 import { getProduct } from "../../services/requests";
 import { withParams } from "../../services/routerHooks";
+import { productSave, productRemove } from "../../store/reducers/cart.slice";
+import { addToCart } from "../../services/cart";
 import { setCategory } from "../../store/reducers/category.slice";
 import { connect } from "react-redux";
 import "./product.scss";
@@ -96,14 +98,25 @@ class Product extends Component {
     if (this.state.isLoading) return <Loader />;
     if (!this.state.isLoading && !this.state.product) return <p>Not found</p>;
 
-    const { currency } = this.props;
-    const { brand, name, gallery, prices, attributes, description, inStock } =
-      this.state.product;
+    const { currency, cart, productSave, productRemove } = this.props;
+    const {
+      id,
+      brand,
+      name,
+      gallery,
+      prices,
+      attributes,
+      description,
+      inStock,
+    } = this.state.product;
+
     const price = prices.filter((p) => p.currency.symbol === currency)[0]
       .amount;
 
     const descriptionElement = document.createElement("div");
     descriptionElement.innerHTML = description;
+
+    const productInCart = cart.find((p) => p.id === id);
 
     const imagesList = gallery.map((img, i) => (
       <div key={i} className="aside-image-wrapper">
@@ -158,7 +171,22 @@ class Product extends Component {
           <span className="product-price">
             {currency} {price}
           </span>
-          <button className="product-cart-button">Add to cart</button>
+          {inStock && (
+            <button
+              className="product-cart-button"
+              onClick={addToCart.bind(
+                this,
+                id,
+                attributes,
+                cart,
+                productSave,
+                productRemove
+              )}
+            >
+              {productInCart ? "Remove from cart" : "Add to cart"}
+            </button>
+          )}
+          {!inStock && <p className="no_product_text">Out of stock</p>}
           <div className="product-description">
             {descriptionElement.textContent}
           </div>
@@ -172,11 +200,14 @@ const mapStateToProps = (state) => {
   return {
     currency: state.currency.currency,
     categories: state.category.categories,
+    cart: state.cart,
   };
 };
 
 const mapDispatchToProps = {
   setCategory,
+  productSave,
+  productRemove,
 };
 
 export default connect(

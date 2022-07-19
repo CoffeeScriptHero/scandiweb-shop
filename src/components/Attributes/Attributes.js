@@ -22,7 +22,7 @@ class Attributes extends Component {
                   backgroundColor: a.type === "swatch" ? i.value : "",
                 }}
               >
-                {a.type === "text" ? i.displayValue : ""}
+                {a.type === "text" ? i.value : ""}
               </div>
             ))}
           </div>

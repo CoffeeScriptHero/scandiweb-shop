@@ -50,7 +50,7 @@
   bottom: -26px;
 }
 .out-of-stock {
-  color: $card-grey-color;
+  color: $out-of-stock-color;
 }
 .img-opacity {
   opacity: 47%;
@@ -65,7 +65,7 @@
     @include textParameters(
       $size: 24px,
       $lineHeight: 38.4px,
-      $color: $card-grey-color
+      $color: $out-of-stock-color
     );
   }
 }
