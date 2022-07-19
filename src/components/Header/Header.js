@@ -11,8 +11,19 @@ import {
   changeCurrency,
 } from "../../store/reducers/currency.slice";
 import Select from "../Select/Select";
+import Minicart from "../Minicart/Minicart";
 
 class Header extends Component {
+  state = {
+    showMinicart: false,
+  };
+
+  toggleMinicart = () => {
+    this.setState(({ showMinicart }) => ({ showMinicart: !showMinicart }));
+  };
+
+  closeMinicart = () => this.setState({ showMinicart: false });
+
   handleClick = (e) => {
     if (e.target.tagName === "A") {
       const activeLink = document.querySelector(".category-active-link");
@@ -32,7 +43,7 @@ class Header extends Component {
   }
 
   render() {
-    const { category } = this.props;
+    const { category, cart } = this.props;
     const categoriesList = this.props.categories.map((c, i) => {
       return (
         <Link
@@ -54,19 +65,24 @@ class Header extends Component {
 
     return (
       <header className="header">
-        <div className="categories-wrapper" onClick={this.handleClick}>
-          {!!categoriesList.length && categoriesList}
-        </div>
-        <div className="logo-wrapper">
-          <img className="logo" src={logo} alt="scandiweb shop logo" />
-        </div>
-        <div className="purchasing-wrapper">
-          <Select
-            options={!!currenciesList.length ? currenciesList : []}
-            handleClick={this.optionHandler}
-          />
-          <div className="header-cart-icon">
-            <Icon type="cart" />
+        <div className="header-content">
+          <div className="categories-wrapper" onClick={this.handleClick}>
+            {!!categoriesList.length && categoriesList}
+          </div>
+          <div className="main-logo-wrapper">
+            <img className="main-logo" src={logo} alt="scandiweb shop logo" />
+          </div>
+          <div className="purchasing-wrapper">
+            <Select
+              options={!!currenciesList.length ? currenciesList : []}
+              handleClick={this.optionHandler}
+            />
+            <div className="header-cart-icon">
+              <Icon type="cart" onClick={this.toggleMinicart} />
+              {this.state.showMinicart && (
+                <Minicart cart={cart} closeMinicart={this.closeMinicart} />
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -79,6 +95,7 @@ const mapStateToProps = (state) => {
     currencies: state.currency.currencies,
     categories: state.category.categories,
     category: state.category.category,
+    cart: state.cart,
   };
 };
 

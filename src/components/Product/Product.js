@@ -7,6 +7,10 @@ class Product extends Component {
   state = { addedToCart: false };
   btnRef = createRef();
 
+  // addToCart = () => {
+
+  // }
+
   componentDidMount() {
     if (this.btnRef.current) {
       this.btnRef.current.addEventListener("click", () => {
@@ -35,17 +39,21 @@ class Product extends Component {
               src={gallery[0]}
               alt={name}
             />
-            {inStock && (
-              <div className="card-purchase-btn" ref={this.btnRef}>
-                <Icon
-                  type={this.state.addedToCart ? "checkmark" : "cart"}
-                  fill="white"
-                  width="24px"
-                  height="24px"
-                />
-              </div>
-            )}
           </Link>
+          {inStock && (
+            <div
+              className="card-purchase-btn"
+              ref={this.btnRef}
+              onClick={this.addToCart}
+            >
+              <Icon
+                type={this.state.addedToCart ? "checkmark" : "cart"}
+                fill="white"
+                width="24px"
+                height="24px"
+              />
+            </div>
+          )}
         </div>
         <Link
           to={`/p/${id}`}

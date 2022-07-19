@@ -16,6 +16,7 @@ class Products extends Component {
         gallery={p.gallery}
         prices={p.prices}
         currency={currency}
+        attributes={p.attributes}
       />
     ));
 

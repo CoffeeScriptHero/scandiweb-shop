@@ -39,6 +39,7 @@
 }
 .select-item {
   cursor: pointer;
+  background-color: $white-color;
   padding: 8px 38px 8px 20px;
   white-space: nowrap;
   @include textParameters($size: 18px, $lineHeight: 29px);

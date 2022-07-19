@@ -1,0 +1,61 @@
+@import "../../sassStyles/variables";
+@import "../../sassStyles/mixins";
+
+.minicart_wrapper {
+  position: fixed;
+  left: 0;
+  top: 76px;
+  right: 0;
+  bottom: 0;
+  background-color: $minicart-shadow-background;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.minicart_content {
+  width: 325px;
+  position: absolute;
+  top: 0;
+  right: 311px;
+  min-height: 200px;
+  max-height: 680px;
+  background-color: $white-color;
+  padding: 0 16.5px;
+}
+
+.empty_minicart_text {
+  @include textParameters($fontFamily: "Roboto");
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+}
+.minicart_buttons_wrapper {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  padding-bottom: 32px;
+}
+.minicart_button {
+  @include textParameters($size: 14px, $lineHeight: 16.8px, $weight: 600);
+  width: 140px;
+  height: 43px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: $white-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  &.minicart_bag_button {
+    border: 1px solid $dark-color;
+    color: $dark-color;
+    margin-right: 12px;
+  }
+  &.minicart_close_button {
+    background-color: $base-color;
+    color: $white-color;
+  }
+}

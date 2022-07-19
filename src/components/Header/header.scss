@@ -2,6 +2,16 @@
 @import "../../sassStyles/mixins";
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: $white-color;
+  width: 100%;
+  z-index: 1000;
+}
+.header-content {
+  width: $container-width;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,19 +36,28 @@
     height: 2px;
     width: calc(100% + 32px);
     background-color: $base-color;
-    top: 30px;
+    top: 45px;
     left: -16px;
     right: 0;
     margin: auto;
   }
 }
 .categories-wrapper {
-  margin: 28px 0px 32px 0px;
+  margin: 32px 0px 28px 0px;
+}
+.main-logo-wrapper {
+  margin-top: 7px;
+}
+.main-logo {
+  width: 31px;
+  height: 28px;
+  display: block;
 }
 .purchasing-wrapper {
   display: flex;
   align-items: center;
 }
 .header-cart-icon {
+  position: relative;
   margin-left: 22px;
 }

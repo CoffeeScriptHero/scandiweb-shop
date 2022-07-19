@@ -2,7 +2,7 @@
 @import "../../sassStyles/mixins";
 
 .catalog {
-  margin-top: 80px;
+  margin-top: calc(79px + 80px);
 }
 
 .catalog-title {

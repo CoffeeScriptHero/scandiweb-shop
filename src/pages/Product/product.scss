@@ -2,7 +2,7 @@
 @import "../../sassStyles/mixins";
 
 .product-page {
-  padding-top: 82px;
+  padding-top: calc(79px + 90px);
   display: flex;
 }
 .aside-wrapper {

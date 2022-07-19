@@ -37,11 +37,11 @@
   @include textParameters($size: 18px, $lineHeight: 29px, $weight: 500);
 }
 .card-purchase-btn {
-  background-color: $base-color;
   position: absolute;
   display: none;
   justify-content: center;
   align-items: center;
+  background-color: $base-color;
   cursor: pointer;
   width: 52px;
   height: 52px;

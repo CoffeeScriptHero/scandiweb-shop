@@ -1,5 +1,6 @@
-// ------ Fonts settings start
+@import "./variables";
 
+// ------ Fonts settings start
 @font-face {
   font-family: "Raleway";
   font-weight: 300;
@@ -75,11 +76,6 @@ body {
 
 a {
   text-decoration: none;
-}
-
-.container {
-  width: 1240px;
-  margin: 0 auto;
 }
 
 // ------ CSS Global styles start

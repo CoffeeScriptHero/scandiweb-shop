@@ -24,11 +24,15 @@ export const GET_PRODUCTS = (categoryName) => {
     query {
       category(input: { title: "${categoryName}" }) {
         products {
-          id, name, inStock, gallery, description, prices {
+          id, name, brand, inStock, gallery, description, prices {
             currency {
               label, symbol
             } amount
-          } brand
+          } attributes {
+            id, name, type, items {
+              displayValue, value, id
+            } 
+          }
         }
       }
     }
