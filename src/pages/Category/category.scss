@@ -5,7 +5,7 @@
   margin-top: calc(79px + 80px);
 }
 
-.catalog-title {
+.catalog_title {
   @include textParameters($size: 42px, $lineHeight: 67.2px);
   margin-bottom: 100px;
   &::first-letter {

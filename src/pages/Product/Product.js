@@ -1,9 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import Loader from "../../components/Loader/Loader";
 import { getProduct } from "../../services/requests";
 import { withParams } from "../../services/routerHooks";
 import { productSave, productRemove } from "../../store/reducers/cart.slice";
-import { addToCart } from "../../services/cart";
 import { setCategory } from "../../store/reducers/category.slice";
 import { connect } from "react-redux";
 import "./product.scss";
@@ -20,8 +19,8 @@ class Product extends Component {
 
   imagesHandler = (e) => {
     if (e.target.tagName === "IMG") {
-      document.querySelector(".active-image").classList.remove("active-image");
-      e.target.classList.add("active-image");
+      document.querySelector(".active_image").classList.remove("active_image");
+      e.target.classList.add("active_image");
       this.setState({ imageToShow: e.target.src });
     }
   };
@@ -30,9 +29,9 @@ class Product extends Component {
     const targetClassList = Array.from(e.target.classList);
     if (targetClassList.includes("attribute")) {
       e.target.parentNode
-        .querySelector(`.attribute-active`)
-        .classList.remove("attribute-active");
-      e.target.classList.add("attribute-active");
+        .querySelector(`.attribute_active`)
+        .classList.remove("attribute_active");
+      e.target.classList.add("attribute_active");
 
       this.setState((prevState) => ({
         attributes: {
@@ -44,8 +43,8 @@ class Product extends Component {
   };
 
   arrowHandler = (e) => {
-    const isTopArrow = document.querySelector(".arrow-top").contains(e.target);
-    const content = document.querySelector(".product-aside-images");
+    const isTopArrow = document.querySelector(".arrow_top").contains(e.target);
+    const content = document.querySelector(".product_aside_images");
     const image = content.children[0];
     const imageHeight = parseInt(window.getComputedStyle(image).height);
     const imageMargin = parseInt(window.getComputedStyle(image).marginBottom);
@@ -64,7 +63,7 @@ class Product extends Component {
     }
   };
 
-  componentDidMount() {
+  setPageParameters = () => {
     const { categories, setCategory } = this.props;
     const id = this.props.params.id;
     getProduct(id).then((res) => {
@@ -92,13 +91,28 @@ class Product extends Component {
         imageToShow: product ? product.gallery[0] : null,
       });
     });
+  };
+
+  purchaseHandler = (inCart) => {
+    const { productRemove, productSave } = this.props;
+    const product = {
+      id: this.state.product.id,
+      attributes: this.state.attributes,
+      amount: 1,
+    };
+
+    inCart ? productRemove(product) : productSave(product);
+  };
+
+  componentDidMount() {
+    this.setPageParameters();
   }
 
   render() {
     if (this.state.isLoading) return <Loader />;
     if (!this.state.isLoading && !this.state.product) return <p>Not found</p>;
 
-    const { currency, cart, productSave, productRemove } = this.props;
+    const { currency, cart } = this.props;
     const {
       id,
       brand,
@@ -110,18 +124,27 @@ class Product extends Component {
       inStock,
     } = this.state.product;
 
+    const selectedAttributes = this.state.attributes;
+
     const price = prices.filter((p) => p.currency.symbol === currency)[0]
       .amount;
 
     const descriptionElement = document.createElement("div");
     descriptionElement.innerHTML = description;
 
-    const productInCart = cart.find((p) => p.id === id);
+    const productInCart = cart.find((p) => {
+      if (p.id === id) {
+        for (let a in p.attributes) {
+          if (p.attributes[a] !== selectedAttributes[a]) return false;
+        }
+        return true;
+      }
+    });
 
     const imagesList = gallery.map((img, i) => (
-      <div key={i} className="aside-image-wrapper">
+      <div key={i} className="aside_image_wrapper">
         <img
-          className={`product-aside-image ${i === 0 ? "active-image" : ""}`}
+          className={`product_aside_image ${i === 0 ? "active_image" : ""}`}
           src={img}
           alt="aside product image"
         />
@@ -129,65 +152,59 @@ class Product extends Component {
     ));
 
     return (
-      <div className="product-page">
-        <div className="aside-wrapper">
+      <div className="product_page">
+        <div className="aside_wrapper">
           {gallery.length > 4 && (
             <div
-              className="aside-scroll-arrow arrow-top"
+              className="aside_scroll_arrow arrow_top"
               onClick={this.arrowHandler}
             >
               <Icon type="scrollarrow" />
             </div>
           )}
-          <aside className="product-aside-images" onClick={this.imagesHandler}>
+          <aside className="product_aside_images" onClick={this.imagesHandler}>
             {imagesList}
           </aside>
           {gallery.length > 4 && (
             <div
-              className="aside-scroll-arrow arrow-bottom"
+              className="aside_scroll_arrow arrow_bottom"
               onClick={this.arrowHandler}
             >
               <Icon type="scrollarrow" />
             </div>
           )}
         </div>
-        <div className="main-image-wrapper">
+        <div className="main_image_wrapper">
           <img
-            className="product-main-image"
+            className="product_main_image"
             src={this.state.imageToShow}
             alt="main product image"
           />
         </div>
-        <div className="product-info-wrapper">
-          <h1 className="product-title">{brand}</h1>
-          <h2 className="product-name">{name}</h2>
+        <div className="product_info_wrapper">
+          <h1 className="product_title">{brand}</h1>
+          <h2 className="product_name">{name}</h2>
           {!!Object.keys(attributes).length && (
             <Attributes
               attributes={attributes}
               onClick={this.attributesHandler}
             />
           )}
-          <h6 className="product-price-title">Price:</h6>
-          <span className="product-price">
+          <h6 className="product_price_title">Price:</h6>
+          <span className="product_price">
             {currency} {price}
           </span>
           {inStock && (
             <button
-              className="product-cart-button"
-              onClick={addToCart.bind(
-                this,
-                id,
-                attributes,
-                cart,
-                productSave,
-                productRemove
-              )}
+              className="product_cart_button"
+              ref={this.btnRef}
+              onClick={this.purchaseHandler.bind(this, productInCart)}
             >
               {productInCart ? "Remove from cart" : "Add to cart"}
             </button>
           )}
           {!inStock && <p className="no_product_text">Out of stock</p>}
-          <div className="product-description">
+          <div className="product_description">
             {descriptionElement.textContent}
           </div>
         </div>

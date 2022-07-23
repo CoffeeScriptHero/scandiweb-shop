@@ -1,72 +1,64 @@
-import React, { Component, createRef } from "react";
+import React, { Component, createRef, PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../Icon/Icon";
-import { addToCart } from "../../services/cart";
 import "./product.scss";
+import { getProduct } from "../../services/requests";
 
 class Product extends Component {
-  storageCart = JSON.parse(localStorage.getItem("cart"));
+  localCart = JSON.parse(localStorage.getItem("cart"));
   state = {
-    addedToCart: this.storageCart
-      ? this.storageCart.find((p) => p.id === this.props.id)
+    addedToCart: this.localCart
+      ? this.localCart.find((p) => p.id === this.props.id)
       : false,
   };
-  btnRef = createRef();
 
-  componentDidMount() {
-    if (this.btnRef.current) {
-      this.btnRef.current.addEventListener("click", () => {
-        this.setState(({ addedToCart }) => ({ addedToCart: !addedToCart }));
-        // some redux logic, adding this product to cart
+  cartBtnHandler = () => {
+    this.setState(({ addedToCart }) => ({ addedToCart: !addedToCart }));
+
+    const inCart = !this.state.addedToCart;
+
+    if (inCart) {
+      getProduct(this.props.id).then((res) => {
+        const defaultAttrs = {};
+        const attrs = res.data.product.attributes;
+
+        attrs.forEach((a) => {
+          defaultAttrs[a.name] = a.items[0].value;
+        });
+
+        this.props.productSave({
+          id: this.props.id,
+          attributes: defaultAttrs,
+          amount: 1,
+        });
       });
+    } else {
+      this.props.removeById(this.props.id);
     }
-  }
+  };
 
   render() {
-    const {
-      attributes,
-      cart,
-      productSave,
-      productRemove,
-      id,
-      name,
-      brand,
-      inStock,
-      gallery,
-      prices,
-      currency,
-    } = this.props;
+    const { id, name, brand, inStock, gallery, prices, currency } = this.props;
 
     const price = prices.filter((p) => p.currency.symbol === currency)[0]
       .amount;
 
     return (
-      <div className="product-card">
+      <div className="product_card">
         <div
-          className={`card-img-wrapper ${
-            inStock ? "" : "img-out-of-stock-text"
+          className={`card_img_wrapper ${
+            inStock ? "" : "img_out_of_stock_text"
           }`}
         >
           <Link to={`/p/${id}`}>
             <img
-              className={`card-img ${inStock ? "" : "img-opacity"}`}
+              className={`card_img ${inStock ? "" : "img_opacity"}`}
               src={gallery[0]}
               alt={name}
             />
           </Link>
           {inStock && (
-            <div
-              className="card-purchase-btn"
-              ref={this.btnRef}
-              onClick={addToCart.bind(
-                this,
-                id,
-                attributes,
-                cart,
-                productSave,
-                productRemove
-              )}
-            >
+            <div className="card_purchase_btn" onClick={this.cartBtnHandler}>
               <Icon
                 type={this.state.addedToCart ? "checkmark" : "cart"}
                 fill="white"
@@ -78,11 +70,11 @@ class Product extends Component {
         </div>
         <Link
           to={`/p/${id}`}
-          className={`card-name-link ${inStock ? "" : "out-of-stock"}`}
+          className={`card_name_link ${inStock ? "" : "out_of_stock"}`}
         >
           {brand} {name}
         </Link>
-        <span className={`card-price ${inStock ? "" : "out-of-stock"}`}>
+        <span className={`card_price ${inStock ? "" : "out_of_stock"}`}>
           {currency} {price}
         </span>
       </div>

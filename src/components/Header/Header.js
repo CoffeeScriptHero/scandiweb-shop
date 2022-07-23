@@ -49,8 +49,8 @@ class Header extends Component {
         <Link
           to={`/${c}`}
           key={i}
-          className={`category-name-link ${
-            c === category ? "category-active-link" : ""
+          className={`category_name_link ${
+            c === category ? "category_active_link" : ""
           }`}
         >
           {c}
@@ -65,22 +65,25 @@ class Header extends Component {
 
     return (
       <header className="header">
-        <div className="header-content">
-          <div className="categories-wrapper" onClick={this.handleClick}>
+        <div className="header_content">
+          <div className="categories_wrapper" onClick={this.handleClick}>
             {!!categoriesList.length && categoriesList}
           </div>
-          <div className="main-logo-wrapper">
-            <img className="main-logo" src={logo} alt="scandiweb shop logo" />
+          <div className="main_logo_wrapper">
+            <img className="main_logo" src={logo} alt="scandiweb shop logo" />
           </div>
-          <div className="purchasing-wrapper">
+          <div className="purchasing_wrapper">
             <Select
               options={!!currenciesList.length ? currenciesList : []}
               handleClick={this.optionHandler}
             />
-            <div className="header-cart-icon">
+            <div className="header_cart_icon">
               <Icon type="cart" onClick={this.toggleMinicart} />
               {this.state.showMinicart && (
                 <Minicart cart={cart} closeMinicart={this.closeMinicart} />
+              )}
+              {!!cart.length && (
+                <div className="products_amount">{cart.length}</div>
               )}
             </div>
           </div>

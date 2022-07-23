@@ -4,7 +4,7 @@ import "./products.scss";
 
 class Products extends Component {
   render() {
-    const { products, currency, cart, productSave, productRemove } = this.props;
+    const { products, currency, productSave, removeById } = this.props;
 
     const productsList = products.map((p) => (
       <Product
@@ -18,8 +18,7 @@ class Products extends Component {
         currency={currency}
         attributes={p.attributes}
         productSave={productSave}
-        productRemove={productRemove}
-        cart={cart}
+        removeById={removeById}
       />
     ));
 

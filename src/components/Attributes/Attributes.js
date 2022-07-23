@@ -7,17 +7,17 @@ class Attributes extends Component {
 
     const attributesList = attributes.map((a) => {
       return (
-        <div className="attribute-wrapper" key={a.id} onClick={onClick}>
-          <h6 className="attribute-title">{a.name}</h6>
-          <div className="attribute-content">
+        <div className="attribute_wrapper" key={a.id} onClick={onClick}>
+          <h6 className="attribute_title">{a.name}</h6>
+          <div className="attribute_content">
             {a.items.map((i, index) => (
               <div
                 key={i.id}
                 data-name={a.name}
                 data-value={i.value}
                 className={`attribute 
-                  ${a.type === "text" ? "text-attribute" : "swatch-attribute"} 
-                  ${index === 0 ? "attribute-active" : ""}`}
+                  ${a.type === "text" ? "text_attribute" : "swatch_attribute"} 
+                  ${index === 0 ? "attribute_active" : ""}`}
                 style={{
                   backgroundColor: a.type === "swatch" ? i.value : "",
                 }}

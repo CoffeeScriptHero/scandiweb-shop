@@ -17,8 +17,8 @@ class Select extends Component {
     document.body.addEventListener("click", (e) => {
       if (
         this.listRef.current &&
-        e.target.className !== "select-btn" &&
-        e.target.className !== "select-item"
+        e.target.className !== "select_btn" &&
+        e.target.className !== "select_item"
       ) {
         // if select list opened (options shown) and there is click outside select
         this.setState({ isOpen: false });
@@ -31,21 +31,21 @@ class Select extends Component {
     // this option array consists of objects with 'value' and 'content' fields
 
     return (
-      <div className="select-wrapper">
-        <button className="select-btn" onClick={this.toggling}>
+      <div className="select_wrapper">
+        <button className="select_btn" onClick={this.toggling}>
           {this.state.value}{" "}
           <div
-            className={`select-arrow ${
-              this.state.isOpen ? "select-arrow-up" : "select-arrow-down"
+            className={`select_arrow ${
+              this.state.isOpen ? "select_arrow-up" : "select_arrow-down"
             }`}
           ></div>
         </button>
         {this.state.isOpen && (
-          <ul className="select-list" ref={this.listRef}>
+          <ul className="select_list" ref={this.listRef}>
             {options.map((o) => (
               <li
                 key={o.value}
-                className="select-item"
+                className="select_item"
                 data-value={o.value}
                 onClick={this.select}
               >

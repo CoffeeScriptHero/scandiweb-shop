@@ -4,8 +4,8 @@ import "./loader.scss";
 export default class Loader extends Component {
   render() {
     return (
-      <div className="centering-wrapper">
-        <div className="lds-grid">
+      <div className="centering_wrapper">
+        <div className="lds_grid">
           <div></div>
           <div></div>
           <div></div>

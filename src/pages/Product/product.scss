@@ -1,33 +1,33 @@
 @import "../../sassStyles/variables";
 @import "../../sassStyles/mixins";
 
-.product-page {
+.product_page {
   padding-top: calc(79px + 90px);
   display: flex;
 }
-.aside-wrapper {
+.aside_wrapper {
   position: relative;
   height: 416px;
 }
-.product-aside-images {
+.product_aside_images {
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
   height: 100%;
 }
-.aside-scroll-arrow {
+.aside_scroll_arrow {
   position: absolute;
   left: 50%;
-  &.arrow-top {
+  &.arrow_top {
     top: -43px;
     transform: translateX(-50%) scaleY(-1);
   }
-  &.arrow-bottom {
+  &.arrow_bottom {
     bottom: -43px;
     transform: translateX(-50%);
   }
 }
-.aside-image-wrapper {
+.aside_image_wrapper {
   min-height: 80px;
   min-width: 79px;
   max-height: 80px;
@@ -36,7 +36,7 @@
     margin-bottom: 32px;
   }
 }
-.product-aside-image {
+.product_aside_image {
   border: 1px solid transparent;
   user-select: none;
   width: 100%;
@@ -44,33 +44,33 @@
   object-fit: cover;
   cursor: pointer;
 }
-.active-image {
+.active_image {
   border: 1px solid $base-color;
 }
-.main-image-wrapper {
+.main_image_wrapper {
   width: 610px;
   height: 511px;
   margin-left: 40px;
   margin-right: 100px;
 }
-.product-main-image {
+.product_main_image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 40% 60%;
 }
-.product-info-wrapper {
+.product_info_wrapper {
   max-width: 293px;
 }
-.product-title {
+.product_title {
   @include textParameters($size: 30px, $lineHeight: 27px, $weight: 600);
   margin-bottom: 16px;
 }
-.product-name {
+.product_name {
   @include textParameters($size: 30px, $lineHeight: 27px);
   margin-bottom: 43px;
 }
-.product-price-title {
+.product_price_title {
   @include textParameters(
     $size: 18px,
     $lineHeight: 18px,
@@ -81,7 +81,7 @@
   margin-top: 38px;
   margin-bottom: 20px;
 }
-.product-price {
+.product_price {
   display: block;
   @include textParameters($size: 24px, $weight: 700, $lineHeight: 18px);
 }
@@ -97,7 +97,7 @@
   margin-top: 35px;
   margin-bottom: 30px;
 }
-.product-cart-button {
+.product_cart_button {
   width: 292px;
   height: 52px;
   outline: none;
@@ -117,7 +117,7 @@
   margin-top: 39px;
   margin-bottom: 56px;
 }
-.product-description {
+.product_description {
   @include textParameters($lineHeight: 25.59px, $fontFamily: "Roboto");
   max-height: 200px;
   padding-right: 5px;

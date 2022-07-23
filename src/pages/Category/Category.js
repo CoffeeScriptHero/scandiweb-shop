@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
 import "./category.scss";
-import { productSave, productRemove } from "../../store/reducers/cart.slice";
+import { productSave, removeById } from "../../store/reducers/cart.slice";
 import { setCategory } from "../../store/reducers/category.slice";
 import { getProducts } from "../../services/requests";
 import { connect } from "react-redux";
@@ -25,9 +25,8 @@ class Category extends Component {
 
   fetchData = () => {
     const path = this.props.params["*"];
-
     getProducts(path).then((res) => {
-      if (res.data.category) {
+      if (res.data) {
         this.setData(res.data.category.products);
       } else {
         this.setState({ isLoading: false, categoryExist: false });
@@ -50,7 +49,7 @@ class Category extends Component {
   }
 
   render() {
-    const { category, currency, cart, productSave, productRemove } = this.props;
+    const { category, currency, productSave, removeById } = this.props;
 
     if (this.state.isLoading) return <Loader />;
     if (!this.state.categoryExist) {
@@ -59,13 +58,12 @@ class Category extends Component {
 
     return (
       <div className="catalog">
-        <h2 className="catalog-title">{category}</h2>
+        <h2 className="catalog_title">{category}</h2>
         <Products
           products={this.state.products}
           currency={currency}
           productSave={productSave}
-          productRemove={productRemove}
-          cart={cart}
+          removeById={removeById}
         />
       </div>
     );
@@ -76,14 +74,13 @@ const mapStateToProps = (state) => {
   return {
     category: state.category.category,
     currency: state.currency.currency,
-    cart: state.cart,
   };
 };
 
 const mapDispatchToProps = {
   setCategory,
   productSave,
-  productRemove,
+  removeById,
 };
 
 export default connect(

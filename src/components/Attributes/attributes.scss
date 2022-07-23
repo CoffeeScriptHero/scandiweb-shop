@@ -1,7 +1,7 @@
 @import "../../sassStyles/variables";
 @import "../../sassStyles/mixins";
 
-.attribute-wrapper {
+.attribute_wrapper {
   &:not(:nth-last-of-type(1)) {
     margin-bottom: 24px;
   }
@@ -9,7 +9,7 @@
 .attribute {
   cursor: pointer;
 }
-.text-attribute {
+.text_attribute {
   @include textParameters(
     $lineHeight: 18px,
     $fontFamily: "Source Sans Pro",
@@ -21,28 +21,28 @@
   &:not(:nth-last-of-type(1)) {
     margin-right: 12px;
   }
-  &.attribute-active {
+  &.attribute_active {
     background-color: $dark-color;
     color: $white-color;
   }
 }
-.swatch-attribute {
+.swatch_attribute {
   width: 36px;
   height: 36px;
   outline-offset: 1px;
   &:not(:nth-last-of-type(1)) {
     margin-right: 8px;
   }
-  &.attribute-active {
+  &.attribute_active {
     outline: 1px solid $base-color;
   }
 }
-.attribute-content {
+.attribute_content {
   display: flex;
   align-items: center;
   white-space: nowrap;
 }
-.attribute-title {
+.attribute_title {
   @include textParameters(
     $size: 18px,
     $lineHeight: 18px,
