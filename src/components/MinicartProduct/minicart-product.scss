@@ -1,0 +1,11 @@
+@import "../../sassStyles/mixins";
+@import "../../sassStyles/variables";
+
+.minicart__item-brand,
+.minicart__item-name {
+  @include textParameters($weight: 300, $lineHeight: 25.6px);
+}
+.minicart__item-price {
+  margin-top: 6px;
+  @include textParameters($weight: 500, $lineHeight: 26px);
+}

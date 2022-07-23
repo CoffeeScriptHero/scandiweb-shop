@@ -1,53 +1,82 @@
 @import "../../sassStyles/variables";
 @import "../../sassStyles/mixins";
 
-.attribute_wrapper {
-  &:not(:nth-last-of-type(1)) {
-    margin-bottom: 24px;
-  }
-}
 .attribute {
-  cursor: pointer;
-}
-.text_attribute {
-  @include textParameters(
-    $lineHeight: 18px,
-    $fontFamily: "Source Sans Pro",
-    $color: $text-attribute-color
-  );
-  border: 1px solid $dark-color;
-  padding: 13px 22px 14px 23px;
-  background-color: $white-color;
   &:not(:nth-last-of-type(1)) {
-    margin-right: 12px;
+    margin-bottom: 8px;
   }
-  &.attribute_active {
-    background-color: $dark-color;
-    color: $white-color;
+  &__title {
+    margin-bottom: 8px;
+    &.attribute__size-small {
+      @include textParameters($size: 14px, $lineHeight: 16px);
+      text-transform: none;
+    }
+    &.attribute__size-big {
+      @include textParameters(
+        $size: 18px,
+        $lineHeight: 18px,
+        $fontFamily: "Roboto Condensed"
+      );
+      text-transform: uppercase;
+      &:not(:nth-last-of-type(1)) {
+        margin-bottom: 24px;
+      }
+    }
   }
-}
-.swatch_attribute {
-  width: 36px;
-  height: 36px;
-  outline-offset: 1px;
-  &:not(:nth-last-of-type(1)) {
-    margin-right: 8px;
+  &__content {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
   }
-  &.attribute_active {
-    outline: 1px solid $base-color;
+  &__item {
+    cursor: pointer;
+
+    &_type_text {
+      border: 1px solid $dark-color;
+      background-color: $white-color;
+      &.attribute__size-small {
+        @include textParameters(
+          $size: 12px,
+          $lineHeight: 22px,
+          $fontFamily: "Source Sans Pro",
+          $color: $text-attribute-color
+        );
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:not(:nth-last-of-type(1)) {
+          margin-right: 8px;
+        }
+      }
+      &.attribute__size-big {
+        @include textParameters(
+          $lineHeight: 18px,
+          $fontFamily: "Source Sans Pro",
+          $color: $text-attribute-color
+        );
+        padding: 13px 22px 14px 23px;
+        &:not(:nth-last-of-type(1)) {
+          margin-right: 12px;
+        }
+      }
+      &.attribute__state-active {
+        background-color: $dark-color;
+        color: $white-color;
+      }
+    }
+
+    &_type_swatch {
+      width: 36px;
+      height: 36px;
+      outline-offset: 1px;
+      &:not(:nth-last-of-type(1)) {
+        margin-right: 8px;
+      }
+      &.attribute__state-active {
+        outline: 1px solid $base-color;
+      }
+    }
   }
-}
-.attribute_content {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
-.attribute_title {
-  @include textParameters(
-    $size: 18px,
-    $lineHeight: 18px,
-    $fontFamily: "Roboto Condensed"
-  );
-  text-transform: uppercase;
-  margin-bottom: 8px;
 }

@@ -26,7 +26,7 @@ class Category extends Component {
   fetchData = () => {
     const path = this.props.params["*"];
     getProducts(path).then((res) => {
-      if (res.data) {
+      if (res.data.category) {
         this.setData(res.data.category.products);
       } else {
         this.setState({ isLoading: false, categoryExist: false });

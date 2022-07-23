@@ -1,7 +1,7 @@
 @import "../../sassStyles/variables";
 @import "../../sassStyles/mixins";
 
-.minicart_wrapper {
+.minicart {
   position: fixed;
   left: 0;
   top: 76px;
@@ -13,31 +13,39 @@
   justify-content: center;
   z-index: 100;
 }
-.minicart_content {
+.minicart__content {
   width: 325px;
   position: absolute;
   top: 0;
   right: 311px;
   min-height: 200px;
-  max-height: 680px;
+  max-height: 677px;
   background-color: $white-color;
   padding: 0 16.5px;
 }
-
-.empty_minicart_text {
+.minicart__content-empty-text {
   @include textParameters($fontFamily: "Roboto");
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -40%);
 }
-.minicart_buttons_wrapper {
-  position: absolute;
-  bottom: 0;
+.minicart__content-items {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+.minicart__content-title {
+  @include textParameters($weight: 700, $lineHeight: 25.6px);
+  margin-bottom: 32px;
+}
+.minicart__content-title-number {
+  @include textParameters($weight: 500, $lineHeight: 25.6px);
+}
+.minicart__content-buttons {
   display: flex;
   padding-bottom: 32px;
 }
-.minicart_button {
+.minicart__content-button {
   @include textParameters($size: 14px, $lineHeight: 16.8px, $weight: 600);
   width: 140px;
   height: 43px;
@@ -49,12 +57,12 @@
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  &.minicart_bag_button {
+  &.minicart__content-button_dark {
     border: 1px solid $dark-color;
     color: $dark-color;
     margin-right: 12px;
   }
-  &.minicart_close_button {
+  &.minicart__content-button_green {
     background-color: $base-color;
     color: $white-color;
   }

@@ -27,11 +27,13 @@ class Product extends Component {
 
   attributesHandler = (e) => {
     const targetClassList = Array.from(e.target.classList);
-    if (targetClassList.includes("attribute")) {
+    const activeClass = "attribute__state-active";
+
+    if (targetClassList.includes("attribute__item")) {
       e.target.parentNode
-        .querySelector(`.attribute_active`)
-        .classList.remove("attribute_active");
-      e.target.classList.add("attribute_active");
+        .querySelector(`.${activeClass}`)
+        .classList.remove(activeClass);
+      e.target.classList.add(activeClass);
 
       this.setState((prevState) => ({
         attributes: {

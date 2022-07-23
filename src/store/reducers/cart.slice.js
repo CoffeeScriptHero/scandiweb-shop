@@ -8,7 +8,7 @@ export const cartSlice = createSlice({
   reducers: {
     productSave: (state, action) => {
       localStorage.setItem("cart", JSON.stringify([...state, action.payload]));
-      state.push(action.payload);
+      return [...state, action.payload];
     },
     productRemove: (state, action) => {
       const localCart = JSON.parse(localStorage.getItem("cart"));
