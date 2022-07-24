@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
 import { getProduct } from "../../services/requests";
 import { withParams } from "../../services/routerHooks";
@@ -76,9 +76,7 @@ class Product extends Component {
         setCategory(product.category ? product.category : null);
       }
 
-      const attrs = res.data.product.attributes;
-
-      attrs.forEach((a) => {
+      product.attributes.forEach((a) => {
         this.setState((prevState) => ({
           attributes: {
             ...prevState.attributes,

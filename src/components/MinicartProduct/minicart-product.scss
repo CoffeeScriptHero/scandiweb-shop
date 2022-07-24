@@ -1,11 +1,57 @@
 @import "../../sassStyles/mixins";
 @import "../../sassStyles/variables";
 
+.minicart__item {
+  max-height: 310px;
+  display: flex;
+  align-items: stretch;
+}
+.minicart__item-info-wrapper {
+  display: inline-block;
+}
 .minicart__item-brand,
 .minicart__item-name {
   @include textParameters($weight: 300, $lineHeight: 25.6px);
 }
 .minicart__item-price {
-  margin-top: 6px;
+  margin-top: 5px;
+  margin-bottom: 7px;
   @include textParameters($weight: 500, $lineHeight: 26px);
+  display: inline-block;
+}
+.minicart__item-amount-adjustment {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 28px;
+  margin-right: 8px;
+}
+.minicart__item-amount-button {
+  @include textParameters($size: 16px, $weight: 500);
+}
+.minicart__item-amount-button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  background-color: $white-color;
+  border: 1px solid $dark-color;
+  padding: 0;
+  cursor: pointer;
+}
+.minicart__item-image-wrapper {
+  min-height: 190px;
+  min-width: 121px;
+  max-height: 190px;
+  max-width: 121px;
+}
+.minicart__item-image {
+  user-select: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 25%;
+  cursor: pointer;
 }

@@ -26,6 +26,7 @@ class Minicart extends Component {
 
     for (let i = 0; i < this.props.cart.length; i++) {
       const product = (await getProduct(cart[i].id)).data.product;
+
       this.setState(({ products }) => ({
         products: [...products, product],
       }));
@@ -44,7 +45,13 @@ class Minicart extends Component {
     const { isLoading, products } = this.state;
 
     const productsList = products.map((p, i) => (
-      <MinicartProduct key={i} product={p} currency={currency} />
+      <MinicartProduct
+        key={i}
+        selectedAttrs={cart[i].attributes}
+        amount={cart[i].amount}
+        product={p}
+        currency={currency}
+      />
     ));
 
     return (
