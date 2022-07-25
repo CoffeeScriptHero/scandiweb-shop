@@ -1,7 +1,7 @@
 import React, { Component, createRef } from "react";
 import "./minicart.scss";
 import { connect } from "react-redux";
-import { productRemove } from "../../store/reducers/cart.slice";
+import { changeQuantity } from "../../store/reducers/cart.slice";
 import { getProduct } from "../../services/requests";
 import MinicartLoader from "../MinicartLoader/MinicartLoader";
 import MinicartProduct from "../MinicartProduct/MinicartProduct";
@@ -41,14 +41,15 @@ class Minicart extends Component {
   }
 
   render() {
-    const { cart, currency, closeMinicart } = this.props;
+    const { cart, currency, closeMinicart, changeQuantity } = this.props;
     const { isLoading, products } = this.state;
 
     const productsList = products.map((p, i) => (
       <MinicartProduct
         key={i}
         selectedAttrs={cart[i].attributes}
-        amount={cart[i].amount}
+        changeQuantity={changeQuantity}
+        quantity={cart[i].quantity}
         product={p}
         currency={currency}
       />
@@ -66,7 +67,7 @@ class Minicart extends Component {
               <h2 className="minicart__content-title">
                 My Bag,{" "}
                 <span className="minicart__content-title-number">
-                  {cart.length} items
+                  {cart.length} {cart.length > 1 ? "items" : "item"}
                 </span>
               </h2>
               {productsList}
@@ -97,7 +98,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  productRemove,
+  changeQuantity,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Minicart);

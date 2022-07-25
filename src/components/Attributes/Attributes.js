@@ -6,7 +6,7 @@ class Attributes extends Component {
     const {
       attributes,
       selectedAttrs = null,
-      onClick,
+      onClick = null,
       smallSize = false,
     } = this.props;
     const sizeClass = smallSize

@@ -29,7 +29,7 @@ class Product extends Component {
         this.props.productSave({
           id: this.props.id,
           attributes: defaultAttrs,
-          amount: 1,
+          quantity: 1,
         });
       });
     } else {

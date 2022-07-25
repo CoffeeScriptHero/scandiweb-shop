@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deepEqual } from "../../services/helpers";
 
 const localCart = JSON.parse(localStorage.getItem("cart"));
 
@@ -11,33 +12,37 @@ export const cartSlice = createSlice({
       return [...state, action.payload];
     },
     productRemove: (state, action) => {
-      const localCart = JSON.parse(localStorage.getItem("cart"));
+      const updatedState = state.filter(
+        (p) =>
+          p.id !== action.payload.id ||
+          !deepEqual(p.attributes, action.payload.attributes)
+      );
 
-      const updatedCart = localCart.filter((p) => {
-        if (p.id === action.payload.id) {
-          for (let a in p.attributes) {
-            if (p.attributes[a] !== action.payload.attributes[a]) return true;
-          }
-          return false;
-        } else {
-          return true;
-        }
-      });
+      localStorage.setItem("cart", JSON.stringify(updatedState));
 
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-
-      return [...updatedCart];
+      return [...updatedState];
     },
     removeById: (state, action) => {
-      const storageCart = JSON.parse(localStorage.getItem("cart"));
-      const updatedCart = storageCart.filter((p) => p.id !== action.payload);
+      const updatedState = state.filter((p) => p.id !== action.payload);
 
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return [...updatedCart];
+      localStorage.setItem("cart", JSON.stringify(updatedState));
+      return [...updatedState];
+    },
+    changeQuantity: (state, action) => {
+      const { id, attributes, type } = action.payload;
+
+      state.forEach((p) => {
+        if (p.id === id && deepEqual(p.attributes, attributes)) {
+          const value = type === "increment" ? 1 : -1;
+          p.quantity += value;
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(state));
     },
   },
 });
 
-export const { productSave, productRemove, removeById } = cartSlice.actions;
+export const { productSave, productRemove, removeById, changeQuantity } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

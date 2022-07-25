@@ -98,7 +98,7 @@ class Product extends Component {
     const product = {
       id: this.state.product.id,
       attributes: this.state.attributes,
-      amount: 1,
+      quantity: 1,
     };
 
     inCart ? productRemove(product) : productSave(product);
