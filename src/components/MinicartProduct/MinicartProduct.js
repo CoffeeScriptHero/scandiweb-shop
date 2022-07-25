@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Attributes from "../Attributes/Attributes";
 import Icon from "../Icon/Icon";
 import "./minicart-product.scss";
@@ -30,7 +31,7 @@ class MinicartProduct extends Component {
   };
 
   render() {
-    const { currency, selectedAttrs, quantity } = this.props;
+    const { currency, selectedAttrs, quantity, closeMinicart } = this.props;
     const { id, name, prices, gallery, brand, attributes } = this.props.product;
 
     const price = prices.filter((p) => p.currency.symbol === currency)[0]
@@ -76,11 +77,13 @@ class MinicartProduct extends Component {
           </button>
         </div>
         <div className="minicart__item-image-wrapper">
-          <img
-            className="minicart__item-image"
-            src={gallery[0]}
-            alt="product image"
-          />
+          <Link to={`/p/${id}`} onClick={closeMinicart}>
+            <img
+              className="minicart__item-image"
+              src={gallery[0]}
+              alt="product image"
+            />
+          </Link>
         </div>
       </article>
     );

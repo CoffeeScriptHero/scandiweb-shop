@@ -44,6 +44,9 @@ class Header extends Component {
 
   render() {
     const { category, cart } = this.props;
+
+    const totalQuantity = cart.reduce((prev, cur) => prev + cur.quantity, 0);
+
     const categoriesList = this.props.categories.map((c, i) => {
       return (
         <Link
@@ -82,8 +85,8 @@ class Header extends Component {
               {this.state.showMinicart && (
                 <Minicart cart={cart} closeMinicart={this.closeMinicart} />
               )}
-              {!!cart.length && (
-                <div className="products_amount">{cart.length}</div>
+              {!!totalQuantity && (
+                <div className="products_amount">{totalQuantity}</div>
               )}
             </div>
           </div>
@@ -98,7 +101,7 @@ const mapStateToProps = (state) => {
     currencies: state.currency.currencies,
     categories: state.category.categories,
     category: state.category.category,
-    cart: state.cart,
+    cart: state.cart.cart,
   };
 };
 

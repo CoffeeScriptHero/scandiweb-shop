@@ -44,6 +44,13 @@
 }
 
 @font-face {
+  font-family: "Roboto";
+  font-weight: 500;
+  src: local("Roboto"),
+    url(../assets/fonts/Roboto/Roboto-Medium.woff) format("woff");
+}
+
+@font-face {
   font-family: "Roboto Condensed";
   font-weight: 700;
   src: local("Roboto Condensed"),
@@ -72,6 +79,7 @@
 body {
   font-family: "Raleway", sans-serif;
   box-sizing: border-box;
+  overflow-y: scroll;
 }
 
 a {

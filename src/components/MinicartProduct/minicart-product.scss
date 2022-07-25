@@ -2,13 +2,16 @@
 @import "../../sassStyles/variables";
 
 .minicart__item {
-  max-height: 310px;
+  height: 195px;
   display: flex;
-  align-items: stretch;
+  &:not(:last-of-type) {
+    margin-bottom: 40px;
+  }
 }
 .minicart__item-info-wrapper {
-  min-width: 130px;
-  // min-width: 130px;
+  width: 135px;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 .minicart__item-brand,
 .minicart__item-name {
@@ -25,8 +28,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-left: 28px;
+  margin-left: 4px;
   margin-right: 8px;
+  height: 190px;
 }
 .minicart__item-quantity-button {
   @include textParameters($size: 16px, $weight: 500);

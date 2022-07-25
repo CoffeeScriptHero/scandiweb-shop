@@ -9,7 +9,7 @@
 .select_btn {
   padding: 0;
   outline: none;
-  background-color: white;
+  background-color: $white-color;
   border: none;
   cursor: pointer;
   @include textParameters($size: 18px, $lineHeight: 29px);
@@ -36,6 +36,7 @@
   left: -15px;
   box-shadow: 0px 4px 35px $select-shadow-color;
   top: 35px;
+  z-index: 25;
 }
 .select_item {
   cursor: pointer;

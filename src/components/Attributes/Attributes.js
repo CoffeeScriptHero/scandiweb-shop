@@ -25,11 +25,17 @@ class Attributes extends Component {
                 data-type={a.type}
                 data-value={i.value}
                 className={`attribute__item 
+                ${sizeClass}
                   ${
                     a.type === "text"
                       ? "attribute__item_type_text"
                       : "attribute__item_type_swatch"
                   } 
+                  ${
+                    smallSize && a.type === "text" && i.value.length > 3
+                      ? "attribute__size-bigger"
+                      : ""
+                  }
                   ${
                     !selectedAttrs && index === 0
                       ? "attribute__state-active"
@@ -39,7 +45,8 @@ class Attributes extends Component {
                     selectedAttrs && selectedAttrs[a.name] === i.value
                       ? "attribute__state-active"
                       : ""
-                  } ${sizeClass}`}
+                  } 
+                  `}
                 style={{
                   backgroundColor: a.type === "swatch" ? i.value : "",
                 }}

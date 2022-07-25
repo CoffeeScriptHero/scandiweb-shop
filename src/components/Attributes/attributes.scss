@@ -45,10 +45,13 @@
         $fontFamily: "Source Sans Pro",
         $color: $text-attribute-color
       );
-      padding: 3px 7px;
       &:not(:nth-last-of-type(1)) {
         margin-right: 8px;
       }
+      min-width: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     &.attribute__size-big {
       @include textParameters(
@@ -56,11 +59,18 @@
         $fontFamily: "Source Sans Pro",
         $color: $text-attribute-color
       );
-      padding: 13px 22px 14px 23px;
+      width: 63px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-transform: uppercase;
       &:not(:nth-last-of-type(1)) {
         margin-right: 12px;
       }
+    }
+    &.attribute__size-bigger {
+      min-width: 40px;
     }
     &.attribute__state-active {
       background-color: $dark-color;

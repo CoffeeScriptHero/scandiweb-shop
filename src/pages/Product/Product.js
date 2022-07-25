@@ -217,7 +217,7 @@ const mapStateToProps = (state) => {
   return {
     currency: state.currency.currency,
     categories: state.category.categories,
-    cart: state.cart,
+    cart: state.cart.cart,
   };
 };
 

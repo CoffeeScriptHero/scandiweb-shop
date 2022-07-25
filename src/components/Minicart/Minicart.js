@@ -23,10 +23,8 @@ class Minicart extends Component {
 
   fetchProducts = async () => {
     const { cart } = this.props;
-
     for (let i = 0; i < this.props.cart.length; i++) {
       const product = (await getProduct(cart[i].id)).data.product;
-
       this.setState(({ products }) => ({
         products: [...products, product],
       }));
@@ -37,6 +35,8 @@ class Minicart extends Component {
   componentDidMount() {
     if (this.props.cart.length) {
       this.fetchProducts();
+    } else {
+      this.setState({ isLoading: false });
     }
   }
 
@@ -44,12 +44,22 @@ class Minicart extends Component {
     const { cart, currency, closeMinicart, changeQuantity } = this.props;
     const { isLoading, products } = this.state;
 
+    const totalPrice = products.reduce((prev, cur, i) => {
+      const itemPrice =
+        cur.prices.find((p) => p.currency.symbol === currency).amount *
+        cart[i].quantity;
+      return Math.round((prev + itemPrice) * 100) / 100;
+    }, 0);
+
+    const totalQuantity = cart.reduce((prev, cur) => prev + cur.quantity, 0);
+
     const productsList = products.map((p, i) => (
       <MinicartProduct
         key={i}
         selectedAttrs={cart[i].attributes}
         changeQuantity={changeQuantity}
         quantity={cart[i].quantity}
+        closeMinicart={closeMinicart}
         product={p}
         currency={currency}
       />
@@ -57,20 +67,34 @@ class Minicart extends Component {
 
     return (
       <div className="minicart" onClick={this.closeHandler}>
-        <div className="minicart__content" ref={this.contentRef}>
+        <div
+          className={`minicart__content ${
+            !cart.length && !isLoading ? "minicart__content-centered" : ""
+          }`}
+          ref={this.contentRef}
+        >
           {isLoading && <MinicartLoader />}
           {!cart.length && !isLoading && (
             <p className="minicart__content-empty-text">Cart is empty. Yet.</p>
           )}
           {!!cart.length && !isLoading && (
-            <div className="minicart__content-items">
-              <h2 className="minicart__content-title">
-                My Bag,{" "}
-                <span className="minicart__content-title-number">
-                  {cart.length} {cart.length > 1 ? "items" : "item"}
-                </span>
-              </h2>
-              {productsList}
+            <h2 className="minicart__content-title">
+              My Bag,{" "}
+              <span className="minicart__content-title-number">
+                {totalQuantity} {totalQuantity > 1 ? "items" : "item"}
+              </span>
+            </h2>
+          )}
+          {!!cart.length && !isLoading && (
+            <div className="minicart__content-items">{productsList}</div>
+          )}
+          {!!cart.length && !isLoading && (
+            <div className="minicart__total">
+              <span className="minicart__total-text">Total</span>
+              <span className="minicart__total-price">
+                {currency}
+                {totalPrice}
+              </span>
             </div>
           )}
           <div className="minicart__content-buttons">
@@ -92,7 +116,7 @@ class Minicart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart,
+    cart: state.cart.cart,
     currency: state.currency.currency,
   };
 };
