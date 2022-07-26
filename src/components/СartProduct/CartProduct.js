@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Attributes from "../Attributes/Attributes";
 import Icon from "../Icon/Icon";
-import "./minicart-product.scss";
+import "./cart-product.scss";
 
-class MinicartProduct extends Component {
+class CartProduct extends Component {
   state = {
     buttonDisabled: this.props.quantity === 1 ? true : false,
   };
@@ -13,7 +13,7 @@ class MinicartProduct extends Component {
     const targetClassList = Array.from(e.target.classList);
     const { quantity, product, selectedAttrs, changeQuantity } = this.props;
 
-    if (targetClassList.includes("minicart__item-quantity-button")) {
+    if (targetClassList.includes("cart-item__quantity-adjustment-button")) {
       const payload = {
         id: product.id,
         attributes: selectedAttrs,
@@ -31,55 +31,74 @@ class MinicartProduct extends Component {
   };
 
   render() {
-    const { currency, selectedAttrs, quantity, closeMinicart } = this.props;
+    const {
+      currency,
+      selectedAttrs,
+      quantity,
+      inMinicart = false,
+      inCart = true,
+      linkHandler = null,
+    } = this.props;
     const { id, name, prices, gallery, brand, attributes } = this.props.product;
 
     const price = prices.filter((p) => p.currency.symbol === currency)[0]
       .amount;
 
     return (
-      <article className="minicart__item">
-        <div className="minicart__item-info-wrapper">
-          <h3 className="minicart__item-brand">{brand}</h3>
-          <h3 className="minicart__item-name">{name}</h3>
-          <span className="minicart__item-price">
+      <article className={`cart-item ${inCart ? "cart-item__size--big" : ""}`}>
+        <div className="cart-item__info">
+          <h3 className="cart-item__info-brand">{brand}</h3>
+          <h3 className="cart-item__info-name">{name}</h3>
+          <span className="cart-item__info-price">
             {currency}
             {price}
           </span>
           <Attributes
             selectedAttrs={selectedAttrs}
             attributes={attributes}
-            smallSize={true}
+            inMinicart={inMinicart}
             onClick={this.attributesHandler}
+            inCart={inCart}
           />
         </div>
         <div
-          className="minicart__item-quantity-adjustment"
+          className="cart-item__quantity-adjustment"
           onClick={this.buttonsHandler}
         >
           <button
             data-type="increment"
-            className="minicart__item-quantity-button"
+            className="cart-item__quantity-adjustment-button"
           >
-            <Icon type="plus" disabledClick={true} width="18" height="13" />
+            <Icon
+              type="plus"
+              disabledClick={true}
+              width={`${inCart ? "25" : "18"}`}
+              height={`${inCart ? "22" : "13"}`}
+            />
           </button>
-          <span className="minicart__item-quantity-number">{quantity}</span>
+          <span className="cart-item__quantity-adjustment-number">
+            {quantity}
+          </span>
           <button
             data-type="decrement"
             disabled={this.state.buttonDisabled}
-            className={`minicart__item-quantity-button ${
+            className={`cart-item__quantity-adjustment-button ${
               this.state.buttonDisabled
-                ? "minicart__item-quantity-button-disabled"
+                ? "cart-item__quantity-adjustment-button--disabled"
                 : ""
             }`}
           >
-            <Icon type="minus" disabledClick={true} width="10" />
+            <Icon
+              type="minus"
+              disabledClick={true}
+              width={`${inCart ? "26" : "10"}`}
+            />
           </button>
         </div>
-        <div className="minicart__item-image-wrapper">
-          <Link to={`/p/${id}`} onClick={closeMinicart}>
+        <div className="cart-item__image-wrapper">
+          <Link to={`/p/${id}`} onClick={linkHandler}>
             <img
-              className="minicart__item-image"
+              className="cart-item__image"
               src={gallery[0]}
               alt="product image"
             />
@@ -90,4 +109,4 @@ class MinicartProduct extends Component {
   }
 }
 
-export default MinicartProduct;
+export default CartProduct;

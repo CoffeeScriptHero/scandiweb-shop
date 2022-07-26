@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
-import { getProduct } from "../../services/requests";
+import { getProduct, getProducts } from "../../services/requests";
 import { withParams } from "../../services/routerHooks";
 import { productSave, productRemove } from "../../store/reducers/cart.slice";
 import { setCategory } from "../../store/reducers/category.slice";
@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import "./product.scss";
 import Icon from "../../components/Icon/Icon";
 import Attributes from "../../components/Attributes/Attributes";
+import { deepEqual } from "../../services/helpers";
 
 class Product extends Component {
   state = {
@@ -19,8 +20,9 @@ class Product extends Component {
 
   imagesHandler = (e) => {
     if (e.target.tagName === "IMG") {
-      document.querySelector(".active_image").classList.remove("active_image");
-      e.target.classList.add("active_image");
+      const activeClass = "product-page__aside-img--active";
+      document.querySelector(`.${activeClass}`).classList.remove(activeClass);
+      e.target.classList.add(activeClass);
       this.setState({ imageToShow: e.target.src });
     }
   };
@@ -45,8 +47,10 @@ class Product extends Component {
   };
 
   arrowHandler = (e) => {
-    const isTopArrow = document.querySelector(".arrow_top").contains(e.target);
-    const content = document.querySelector(".product_aside_images");
+    const isTopArrow = document
+      .querySelector(".product-page__aside-scroll-arrow-top")
+      .contains(e.target);
+    const content = document.querySelector(".product-page__aside-images");
     const image = content.children[0];
     const imageHeight = parseInt(window.getComputedStyle(image).height);
     const imageMargin = parseInt(window.getComputedStyle(image).marginBottom);
@@ -68,6 +72,7 @@ class Product extends Component {
   setPageParameters = () => {
     const { categories, setCategory } = this.props;
     const id = this.props.params.id;
+
     getProduct(id).then((res) => {
       const product = res.data.product;
 
@@ -104,6 +109,12 @@ class Product extends Component {
     inCart ? productRemove(product) : productSave(product);
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.params.id !== this.props.params.id) {
+      this.setPageParameters();
+    }
+  }
+
   componentDidMount() {
     this.setPageParameters();
   }
@@ -112,17 +123,9 @@ class Product extends Component {
     if (this.state.isLoading) return <Loader />;
     if (!this.state.isLoading && !this.state.product) return <p>Not found</p>;
 
-    const { currency, cart } = this.props;
-    const {
-      id,
-      brand,
-      name,
-      gallery,
-      prices,
-      attributes,
-      description,
-      inStock,
-    } = this.state.product;
+    const { currency } = this.props;
+    const { brand, name, gallery, prices, attributes, description, inStock } =
+      this.state.product;
 
     const selectedAttributes = this.state.attributes;
 
@@ -132,19 +135,14 @@ class Product extends Component {
     const descriptionElement = document.createElement("div");
     descriptionElement.innerHTML = description;
 
-    const productInCart = cart.find((p) => {
-      if (p.id === id) {
-        for (let a in p.attributes) {
-          if (p.attributes[a] !== selectedAttributes[a]) return false;
-        }
-        return true;
-      }
-    });
+    const inCart = deepEqual(attributes, selectedAttributes);
 
     const imagesList = gallery.map((img, i) => (
-      <div key={i} className="aside_image_wrapper">
+      <div key={i} className="product-page__aside-img-wrapper">
         <img
-          className={`product_aside_image ${i === 0 ? "active_image" : ""}`}
+          className={`product-page__aside-img ${
+            i === 0 ? "product-page__aside-img--active" : ""
+          }`}
           src={img}
           alt="aside product image"
         />
@@ -152,59 +150,67 @@ class Product extends Component {
     ));
 
     return (
-      <div className="product_page">
-        <div className="aside_wrapper">
+      <div className="product-page">
+        <div className="product-page__aside">
           {gallery.length > 4 && (
             <div
-              className="aside_scroll_arrow arrow_top"
+              className="
+              product-page__aside-scroll-arrow 
+              product-page__aside-scroll-arrow-top"
               onClick={this.arrowHandler}
             >
               <Icon type="scrollarrow" />
             </div>
           )}
-          <aside className="product_aside_images" onClick={this.imagesHandler}>
+          <aside
+            className="product-page__aside-images"
+            onClick={this.imagesHandler}
+          >
             {imagesList}
           </aside>
           {gallery.length > 4 && (
             <div
-              className="aside_scroll_arrow arrow_bottom"
+              className="
+              product-page__aside-scroll-arrow product-page__aside-scroll-arrow-bottom"
               onClick={this.arrowHandler}
             >
               <Icon type="scrollarrow" />
             </div>
           )}
         </div>
-        <div className="main_image_wrapper">
+        <div className="product-page__img-wrapper">
           <img
-            className="product_main_image"
+            className="product-page__img"
             src={this.state.imageToShow}
             alt="main product image"
           />
         </div>
-        <div className="product_info_wrapper">
-          <h1 className="product_title">{brand}</h1>
-          <h2 className="product_name">{name}</h2>
+        <div className="product-page__info">
+          <h1 className="product-page__info-title">{brand}</h1>
+          <h2 className="product-page__info-name">{name}</h2>
           {!!Object.keys(attributes).length && (
             <Attributes
               attributes={attributes}
               onClick={this.attributesHandler}
             />
           )}
-          <h6 className="product_price_title">Price:</h6>
-          <span className="product_price">
+          <h6 className="product-page__info-price-title">Price:</h6>
+          <span className="product-page__info-price">
             {currency} {price}
           </span>
           {inStock && (
             <button
-              className="product_cart_button"
+              className="product-page__info-purchase-btn"
               ref={this.btnRef}
-              onClick={this.purchaseHandler.bind(this, productInCart)}
+              onClick={this.purchaseHandler.bind(this, inCart)}
             >
-              {productInCart ? "Remove from cart" : "Add to cart"}
+              {inCart ? "Remove from cart" : "Add to cart"}
             </button>
           )}
-          {!inStock && <p className="no_product_text">Out of stock</p>}
-          <div className="product_description">
+          {!inStock && (
+            <p className="product-page__info-out-of-stock">Out of stock</p>
+          )}
+          <div className="product-page__info-description">
             {descriptionElement.textContent}
           </div>
         </div>
@@ -217,7 +223,6 @@ const mapStateToProps = (state) => {
   return {
     currency: state.currency.currency,
     categories: state.category.categories,
-    cart: state.cart.cart,
   };
 };
 

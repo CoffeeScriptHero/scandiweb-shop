@@ -44,21 +44,26 @@ class Product extends Component {
       .amount;
 
     return (
-      <div className="product_card">
+      <div className="product">
         <div
-          className={`card_img_wrapper ${
-            inStock ? "" : "img_out_of_stock_text"
+          className={`product__img-wrapper ${
+            inStock ? "" : "product__img-out-of-stock-text"
           }`}
         >
           <Link to={`/p/${id}`}>
             <img
-              className={`card_img ${inStock ? "" : "img_opacity"}`}
+              className={`product__img ${
+                inStock ? "" : "product__img--opacity"
+              }`}
               src={gallery[0]}
               alt={name}
             />
           </Link>
           {inStock && (
-            <div className="card_purchase_btn" onClick={this.cartBtnHandler}>
+            <div
+              className="product__img-purchase-btn"
+              onClick={this.cartBtnHandler}
+            >
               <Icon
                 type={this.state.addedToCart ? "checkmark" : "cart"}
                 fill="white"
@@ -70,11 +75,17 @@ class Product extends Component {
         </div>
         <Link
           to={`/p/${id}`}
-          className={`card_name_link ${inStock ? "" : "out_of_stock"}`}
+          className={`product__name-link ${
+            inStock ? "" : "product__text-out-of-stock"
+          }`}
         >
           {brand} {name}
         </Link>
-        <span className={`card_price ${inStock ? "" : "out_of_stock"}`}>
+        <span
+          className={`product__price ${
+            inStock ? "" : "product__text-out-of-stock"
+          }`}
+        >
           {currency} {price}
         </span>
       </div>

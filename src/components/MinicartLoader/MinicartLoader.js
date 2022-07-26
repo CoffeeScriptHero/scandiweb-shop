@@ -4,7 +4,7 @@ import "./minicart-loader.scss";
 class MinicartLoader extends Component {
   render() {
     return (
-      <div className="minicart_loader">
+      <div className="minicart__loader">
         <div></div>
         <div></div>
         <div></div>

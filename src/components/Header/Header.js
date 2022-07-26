@@ -26,9 +26,10 @@ class Header extends Component {
 
   handleClick = (e) => {
     if (e.target.tagName === "A") {
-      const activeLink = document.querySelector(".category-active-link");
-      if (activeLink) activeLink.classList.remove("category-active-link");
-      e.target.classList.add("category-active-link");
+      const activeClass = "header__content-category---active";
+      const activeLink = document.querySelector(`.${activeClass}`);
+      if (activeLink) activeLink.classList.remove(activeClass);
+      e.target.classList.add(activeClass);
     }
   };
 
@@ -52,8 +53,8 @@ class Header extends Component {
         <Link
           to={`/${c}`}
           key={i}
-          className={`category_name_link ${
-            c === category ? "category_active_link" : ""
+          className={`header__content-category ${
+            c === category ? "header__content-category---active" : ""
           }`}
         >
           {c}
@@ -68,25 +69,34 @@ class Header extends Component {
 
     return (
       <header className="header">
-        <div className="header_content">
-          <div className="categories_wrapper" onClick={this.handleClick}>
+        <div className="header__content">
+          <div
+            className="header__content-categories"
+            onClick={this.handleClick}
+          >
             {!!categoriesList.length && categoriesList}
           </div>
-          <div className="main_logo_wrapper">
-            <img className="main_logo" src={logo} alt="scandiweb shop logo" />
+          <div className="header__content-logo">
+            <img
+              className="header__content-logo-img"
+              src={logo}
+              alt="scandiweb shop logo"
+            />
           </div>
-          <div className="purchasing_wrapper">
+          <div className="header__content-purchases">
             <Select
               options={!!currenciesList.length ? currenciesList : []}
               handleClick={this.optionHandler}
             />
-            <div className="header_cart_icon">
+            <div className="header__content-purchases-minicart-icon">
               <Icon type="cart" onClick={this.toggleMinicart} />
               {this.state.showMinicart && (
                 <Minicart cart={cart} closeMinicart={this.closeMinicart} />
               )}
               {!!totalQuantity && (
-                <div className="products_amount">{totalQuantity}</div>
+                <div className="header__content-purchases-minicart-quantity">
+                  {totalQuantity}
+                </div>
               )}
             </div>
           </div>

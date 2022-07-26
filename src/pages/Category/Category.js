@@ -57,8 +57,8 @@ class Category extends Component {
     }
 
     return (
-      <div className="catalog">
-        <h2 className="catalog_title">{category}</h2>
+      <div className="category">
+        <h2 className="category__title">{category}</h2>
         <Products
           products={this.state.products}
           currency={currency}

@@ -1,6 +1,20 @@
 @import "../../sassStyles/variables";
 @import "../../sassStyles/mixins";
 
+.attributes {
+  &__type-cart {
+    height: 170px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding-left: 2px;
+  }
+  &__type-minicart {
+    height: 105px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding-left: 2px;
+  }
+}
 .attribute {
   &.attribute__size-small {
     &:not(:nth-last-of-type(1)) {
@@ -11,6 +25,7 @@
     &:not(:nth-last-of-type(1)) {
       margin-bottom: 24px;
     }
+    padding-left: 2px;
   }
   &__title {
     margin-bottom: 8px;

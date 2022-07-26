@@ -1,0 +1,12 @@
+@import "../../sassStyles/mixins";
+@import "../../sassStyles/variables";
+
+.cart {
+  margin-top: 169px;
+  margin-bottom: 200px;
+  &__title {
+    @include textParameters($size: 32px, $weight: 700, $lineHeight: 40px);
+    text-transform: uppercase;
+    margin-bottom: 55px;
+  }
+}

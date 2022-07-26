@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { changeQuantity } from "../../store/reducers/cart.slice";
 import { getProduct } from "../../services/requests";
 import MinicartLoader from "../MinicartLoader/MinicartLoader";
-import MinicartProduct from "../MinicartProduct/MinicartProduct";
+import CartProduct from "../СartProduct/CartProduct";
+import { Link } from "react-router-dom";
 
 class Minicart extends Component {
   state = {
@@ -54,12 +55,14 @@ class Minicart extends Component {
     const totalQuantity = cart.reduce((prev, cur) => prev + cur.quantity, 0);
 
     const productsList = products.map((p, i) => (
-      <MinicartProduct
+      <CartProduct
         key={i}
-        selectedAttrs={cart[i].attributes}
         changeQuantity={changeQuantity}
+        selectedAttrs={cart[i].attributes}
         quantity={cart[i].quantity}
         closeMinicart={closeMinicart}
+        inMinicart={true}
+        inCart={false}
         product={p}
         currency={currency}
       />
@@ -98,9 +101,13 @@ class Minicart extends Component {
             </div>
           )}
           <div className="minicart__content-buttons">
-            <button className="minicart__content-button minicart__content-button_dark">
+            <Link
+              to="/cart"
+              onClick={closeMinicart}
+              className="minicart__content-button minicart__content-button_dark"
+            >
               VIEW BAG
-            </button>
+            </Link>
             <button
               className="minicart__content-button minicart__content-button_green"
               onClick={closeMinicart}

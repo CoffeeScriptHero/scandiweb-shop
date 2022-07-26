@@ -13,3 +13,10 @@
   color: $color;
   font-family: $fontFamily;
 }
+
+@mixin minMaxWidthHeight($maxWidth, $maxHeight) {
+  min-width: $maxWidth;
+  max-width: $maxWidth;
+  min-height: $maxHeight;
+  max-height: $maxHeight;
+} ;

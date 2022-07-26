@@ -7,9 +7,11 @@ class Attributes extends Component {
       attributes,
       selectedAttrs = null,
       onClick = null,
-      smallSize = false,
+      inCart = false,
+      inMinicart = false,
     } = this.props;
-    const sizeClass = smallSize
+
+    const sizeClass = inMinicart
       ? "attribute__size-small"
       : "attribute__size-big";
 
@@ -32,7 +34,7 @@ class Attributes extends Component {
                       : "attribute__item_type_swatch"
                   } 
                   ${
-                    smallSize && a.type === "text" && i.value.length > 3
+                    inMinicart && a.type === "text" && i.value.length > 3
                       ? "attribute__size-bigger"
                       : ""
                   }
@@ -59,7 +61,15 @@ class Attributes extends Component {
       );
     });
 
-    return <div>{attributesList}</div>;
+    return (
+      <div
+        className={`attributes ${inCart ? "attributes__type-cart" : ""} ${
+          inMinicart ? "attributes__type-minicart" : ""
+        }`}
+      >
+        {attributesList}
+      </div>
+    );
   }
 }
 

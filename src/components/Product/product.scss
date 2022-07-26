@@ -1,7 +1,7 @@
 @import "../../sassStyles/variables";
 @import "../../sassStyles/mixins";
 
-.product_card {
+.product {
   display: inline-block;
   padding: 16px;
   &:not(:nth-of-type(3n)) {
@@ -12,60 +12,60 @@
   }
   &:hover {
     box-shadow: 0px 4px 35px $card-shadow-color;
-    .card_purchase_btn {
+    .product__img-purchase-btn {
       display: flex;
     }
   }
-}
-.card_img_wrapper {
-  position: relative;
-  margin-bottom: 24px;
-  width: 354px;
-  height: 330px;
-}
-.card_img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.card_name_link {
-  display: block;
-  @include textParameters($size: 18px, $lineHeight: 28.8px);
-  max-width: 354px;
-}
-.card_price {
-  @include textParameters($size: 18px, $lineHeight: 29px, $weight: 500);
-}
-.card_purchase_btn {
-  position: absolute;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  background-color: $base-color;
-  cursor: pointer;
-  width: 52px;
-  height: 52px;
-  border-radius: 100%;
-  right: 18px;
-  bottom: -26px;
-}
-.out_of_stock {
-  color: $out-of-stock-color;
-}
-.img_opacity {
-  opacity: 47%;
-}
-.img_out_of_stock_text {
-  &:after {
-    content: "OUT OF STOCK";
+  &__img-wrapper {
+    position: relative;
+    margin-bottom: 24px;
+    width: 354px;
+    height: 330px;
+  }
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &__name-link {
+    display: block;
+    @include textParameters($size: 18px, $lineHeight: 28.8px);
+    max-width: 354px;
+  }
+  &__price {
+    @include textParameters($size: 18px, $lineHeight: 29px, $weight: 500);
+  }
+  &__img-purchase-btn {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    @include textParameters(
-      $size: 24px,
-      $lineHeight: 38.4px,
-      $color: $out-of-stock-color
-    );
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: $base-color;
+    cursor: pointer;
+    width: 52px;
+    height: 52px;
+    border-radius: 100%;
+    right: 18px;
+    bottom: -26px;
+  }
+  &__text-out-of-stock {
+    color: $out-of-stock-color;
+  }
+  &__img--opacity {
+    opacity: 47%;
+  }
+  &__img-out-of-stock-text {
+    &:after {
+      content: "OUT OF STOCK";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      @include textParameters(
+        $size: 24px,
+        $lineHeight: 38.4px,
+        $color: $out-of-stock-color
+      );
+    }
   }
 }
