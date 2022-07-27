@@ -1,4 +1,5 @@
 @import "./variables";
+@import "./mixins";
 
 // ------ Fonts settings start
 @font-face {
@@ -84,6 +85,25 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.purchase-button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include textParameters(
+    $lineHeight: 19.2px,
+    $weight: 600,
+    $color: $white-color
+  );
+  text-transform: uppercase;
+  background-color: $base-color;
+  margin-top: 39px;
+  margin-bottom: 56px;
 }
 
 // ------ CSS Global styles start

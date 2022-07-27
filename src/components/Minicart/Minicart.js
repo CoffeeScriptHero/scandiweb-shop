@@ -6,6 +6,7 @@ import { getProduct } from "../../services/requests";
 import MinicartLoader from "../MinicartLoader/MinicartLoader";
 import CartProduct from "../СartProduct/CartProduct";
 import { Link } from "react-router-dom";
+import { countTotalPrice } from "../../services/helpers";
 
 class Minicart extends Component {
   state = {
@@ -45,12 +46,7 @@ class Minicart extends Component {
     const { cart, currency, closeMinicart, changeQuantity } = this.props;
     const { isLoading, products } = this.state;
 
-    const totalPrice = products.reduce((prev, cur, i) => {
-      const itemPrice =
-        cur.prices.find((p) => p.currency.symbol === currency).amount *
-        cart[i].quantity;
-      return Math.round((prev + itemPrice) * 100) / 100;
-    }, 0);
+    const totalPrice = countTotalPrice(products, currency, cart);
 
     const totalQuantity = cart.reduce((prev, cur) => prev + cur.quantity, 0);
 
@@ -62,7 +58,6 @@ class Minicart extends Component {
         quantity={cart[i].quantity}
         closeMinicart={closeMinicart}
         inMinicart={true}
-        inCart={false}
         product={p}
         currency={currency}
       />

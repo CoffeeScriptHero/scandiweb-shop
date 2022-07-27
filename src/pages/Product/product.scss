@@ -99,22 +99,6 @@
   &__info-purchase-btn {
     width: 292px;
     height: 52px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    @include textParameters(
-      $lineHeight: 19.2px,
-      $weight: 600,
-      $color: $white-color
-    );
-    text-transform: uppercase;
-    background-color: $base-color;
-    margin-top: 39px;
-    margin-bottom: 56px;
   }
   &__info-description {
     @include textParameters($lineHeight: 25.59px, $fontFamily: "Roboto");

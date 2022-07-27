@@ -5,3 +5,6 @@
 .icon__click-off {
   pointer-events: none;
 }
+.icon__flipped--horizontally {
+  transform: scaleX(-1);
+}

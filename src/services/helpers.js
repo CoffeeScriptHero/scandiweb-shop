@@ -24,4 +24,21 @@ export const deepEqual = (object1, object2) => {
   return true;
 };
 
-// export getCartProduct = ()
+export const countTotalPrice = (products, currency, cart) => {
+  return products.reduce((prev, cur, i) => {
+    const itemPrice =
+      cur.prices.find((p) => p.currency.symbol === currency).amount *
+      cart[i].quantity;
+    return Math.round((prev + itemPrice) * 100) / 100;
+  }, 0);
+};
+
+export const countItemPrice = (prices, currency, quantity) => {
+  return (
+    Math.round(
+      prices.filter((p) => p.currency.symbol === currency)[0].amount *
+        quantity *
+        100
+    ) / 100
+  );
+};

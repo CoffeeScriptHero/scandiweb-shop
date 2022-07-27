@@ -7,7 +7,6 @@ class Attributes extends Component {
       attributes,
       selectedAttrs = null,
       onClick = null,
-      inCart = false,
       inMinicart = false,
     } = this.props;
 
@@ -63,7 +62,7 @@ class Attributes extends Component {
 
     return (
       <div
-        className={`attributes ${inCart ? "attributes__type-cart" : ""} ${
+        className={`attributes ${inMinicart ? "" : "attributes__type-cart"} ${
           inMinicart ? "attributes__type-minicart" : ""
         }`}
       >

@@ -123,9 +123,17 @@ class Product extends Component {
     if (this.state.isLoading) return <Loader />;
     if (!this.state.isLoading && !this.state.product) return <p>Not found</p>;
 
-    const { currency } = this.props;
-    const { brand, name, gallery, prices, attributes, description, inStock } =
-      this.state.product;
+    const { cart, currency } = this.props;
+    const {
+      id,
+      brand,
+      name,
+      gallery,
+      prices,
+      attributes,
+      description,
+      inStock,
+    } = this.state.product;
 
     const selectedAttributes = this.state.attributes;
 
@@ -135,7 +143,9 @@ class Product extends Component {
     const descriptionElement = document.createElement("div");
     descriptionElement.innerHTML = description;
 
-    const inCart = deepEqual(attributes, selectedAttributes);
+    const inCart = cart.filter(
+      (p) => p.id === id && deepEqual(p.attributes, selectedAttributes)
+    ).length;
 
     const imagesList = gallery.map((img, i) => (
       <div key={i} className="product-page__aside-img-wrapper">
@@ -200,7 +210,7 @@ class Product extends Component {
           </span>
           {inStock && (
             <button
-              className="product-page__info-purchase-btn"
+              className="purchase-button product-page__info-purchase-btn"
               ref={this.btnRef}
               onClick={this.purchaseHandler.bind(this, inCart)}
             >
@@ -221,6 +231,7 @@ class Product extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    cart: state.cart.cart,
     currency: state.currency.currency,
     categories: state.category.categories,
   };
