@@ -21,7 +21,6 @@ class Product extends Component {
       getProduct(this.props.id).then((res) => {
         const defaultAttrs = {};
         const attrs = res.data.product.attributes;
-        console.log(attrs);
 
         attrs.forEach((a) => {
           defaultAttrs[a.name] = a.items[0].value;
@@ -45,7 +44,7 @@ class Product extends Component {
       .amount;
 
     return (
-      <div className="product">
+      <article className="product">
         <div
           className={`product__img-wrapper ${
             inStock ? "" : "product__img-out-of-stock-text"
@@ -89,7 +88,7 @@ class Product extends Component {
         >
           {currency} {price}
         </span>
-      </div>
+      </article>
     );
   }
 }
