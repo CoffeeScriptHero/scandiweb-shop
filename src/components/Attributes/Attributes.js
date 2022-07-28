@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./attributes.scss";
 
-class Attributes extends Component {
+class Attributes extends PureComponent {
   render() {
     const {
       attributes,
