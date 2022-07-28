@@ -74,7 +74,9 @@ class CartProduct extends Component {
       >
         <div className="cart-item__info">
           <h3 className="cart-item__info-brand">{brand}</h3>
-          <h3 className="cart-item__info-name">{name}</h3>
+          <Link to={`/p/${id}`} className="cart-item__info-name">
+            {name}
+          </Link>
           <span className="cart-item__info-price">
             {currency}
             {price}

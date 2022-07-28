@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
-import { getProduct, getProductAtts } from "../../services/requests";
+import { getProduct } from "../../services/requests";
 import { withParams } from "../../services/routerHooks";
 import { productSave, productRemove } from "../../store/reducers/cart.slice";
 import { setCategory } from "../../store/reducers/category.slice";
@@ -166,8 +166,8 @@ class Product extends Component {
           {gallery.length > 4 && (
             <div
               className="
-              product-page__aside-scroll-arrow 
-              product-page__aside-scroll-arrow-top"
+                product-page__aside-scroll-arrow
+                product-page__aside-scroll-arrow-top"
               onClick={this.arrowHandler}
             >
               <Icon type="scrollarrow" />
@@ -182,7 +182,7 @@ class Product extends Component {
           {gallery.length > 4 && (
             <div
               className="
-              product-page__aside-scroll-arrow product-page__aside-scroll-arrow-bottom"
+                product-page__aside-scroll-arrow product-page__aside-scroll-arrow-bottom"
               onClick={this.arrowHandler}
             >
               <Icon type="scrollarrow" />
@@ -221,9 +221,7 @@ class Product extends Component {
           {!inStock && (
             <p className="product-page__info-out-of-stock">Out of stock</p>
           )}
-          <div className="product-page__info-description">
-            {/* {descriptionElement.textContent} */}
-          </div>
+          <div className="product-page__info-description"></div>
         </div>
       </div>
     );

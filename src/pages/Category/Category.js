@@ -27,7 +27,6 @@ class Category extends Component {
   fetchData = () => {
     const path = this.props.params["*"];
     getProducts(path).then((res) => {
-      console.log(res.data.category);
       if (res.data.category) {
         this.setData(res.data.category.products);
       } else {
@@ -46,6 +45,7 @@ class Category extends Component {
 
     if (prevProps.category !== path) {
       setCategory(path);
+      this.setState({ products: [] });
       this.fetchData();
     }
   }
@@ -54,9 +54,7 @@ class Category extends Component {
     const { category, currency, productSave, removeById } = this.props;
 
     if (this.state.isLoading) return <Loader />;
-    if (!this.state.categoryExist) {
-      return <NotFound />;
-    }
+    if (!this.state.categoryExist) return <NotFound />;
 
     return (
       <div className="category">

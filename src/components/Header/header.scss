@@ -72,5 +72,8 @@
     border-radius: 50%;
     top: -10px;
     left: 12px;
+    @media (max-width: 1500px) {
+      padding-bottom: 2px;
+    }
   }
 }

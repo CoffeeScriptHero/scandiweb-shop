@@ -15,12 +15,13 @@ class Product extends Component {
   cartBtnHandler = () => {
     this.setState(({ addedToCart }) => ({ addedToCart: !addedToCart }));
 
-    const inCart = !this.state.addedToCart;
+    const inCart = this.state.addedToCart;
 
-    if (inCart) {
+    if (!inCart) {
       getProduct(this.props.id).then((res) => {
         const defaultAttrs = {};
         const attrs = res.data.product.attributes;
+        console.log(attrs);
 
         attrs.forEach((a) => {
           defaultAttrs[a.name] = a.items[0].value;

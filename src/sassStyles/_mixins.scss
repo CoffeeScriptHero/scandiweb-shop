@@ -1,5 +1,13 @@
 @import "./variables";
 
+@mixin fontConnect($family, $weight, $path) {
+  @font-face {
+    font-family: $family;
+    font-weight: $weight;
+    src: local($family), url($path) format("woff");
+  }
+}
+
 @mixin textParameters(
   $size: 16px,
   $weight: 400,

@@ -22,11 +22,7 @@ class Products extends Component {
       />
     ));
 
-    return (
-      <section className="products" ref={this.productsRef}>
-        {productsList}
-      </section>
-    );
+    return <section className="products">{productsList}</section>;
   }
 }
 

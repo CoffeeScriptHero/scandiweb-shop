@@ -3,6 +3,8 @@
 
 .product-page {
   margin-top: 169px;
+  margin-bottom: 50px;
+
   display: flex;
   &__aside {
     position: relative;
@@ -41,6 +43,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 25%;
     cursor: pointer;
   }
   &__aside-img--active {
@@ -56,7 +59,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 40% 60%;
+    object-position: center 30%;
   }
   &__info {
     max-width: 293px;

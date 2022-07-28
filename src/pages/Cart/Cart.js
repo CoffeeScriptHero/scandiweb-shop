@@ -3,16 +3,23 @@ import { getProduct } from "../../services/requests";
 import { connect } from "react-redux";
 import CartProduct from "../../components/СartProduct/CartProduct";
 import { setCategory } from "../../store/reducers/category.slice";
-import { changeQuantity } from "../../store/reducers/cart.slice";
+import { changeQuantity, sendOrderData } from "../../store/reducers/cart.slice";
 import Loader from "../../components/Loader/Loader";
 import "./cart.scss";
 import { countTotalPrice } from "../../services/helpers";
 import cartSvg from "../../assets/images/cart-dummy.svg";
+import { Link } from "react-router-dom";
 
 class Cart extends Component {
   state = {
     products: [],
     isLoading: true,
+    orderDone: false,
+  };
+
+  makeOrder = () => {
+    this.props.sendOrderData();
+    this.setState({ orderDone: true, products: [] });
   };
 
   fetchProducts = async () => {
@@ -32,7 +39,7 @@ class Cart extends Component {
   }
 
   render() {
-    const { products, isLoading } = this.state;
+    const { products, isLoading, orderDone } = this.state;
 
     if (isLoading) return <Loader />;
 
@@ -57,13 +64,29 @@ class Cart extends Component {
     return (
       <div className="cart">
         <h1 className="cart__title">Cart</h1>
-        {!isLoading && !products.length && (
+        {!isLoading && !products.length && !orderDone && (
           <div className="cart__empty">
             <img className="cart__empty-img" src={cartSvg} />
             <h1 className="cart__empty-title">Cart is empty</h1>
             <span className="cart__empty-text">
               But it's never too late to change that :)
             </span>
+          </div>
+        )}
+        {!isLoading && orderDone && (
+          <div className="cart__order-done">
+            <h1 className="cart__order-done-title">
+              Thank you for your purchase!
+            </h1>
+            <span className="cart__order-done-text">
+              The package will be sent to you soon..
+            </span>
+            <span className="cart__order-done-text-trolling">
+              If you have specified the shipping details, of course ¯\_(ツ)_/¯
+            </span>
+            <Link className="purchase-button cart__order-done-button" to="/all">
+              Continue shopping
+            </Link>
           </div>
         )}
         {!isLoading && !!products.length && (
@@ -88,7 +111,10 @@ class Cart extends Component {
                 </span>
               </div>
             </div>
-            <button className="purchase-button cart__purchase-button">
+            <button
+              className="purchase-button cart__purchase-button"
+              onClick={this.makeOrder}
+            >
               Order
             </button>
           </div>
@@ -105,6 +131,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setCategory,
   changeQuantity,
+  sendOrderData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

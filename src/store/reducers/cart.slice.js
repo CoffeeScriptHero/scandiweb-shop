@@ -37,10 +37,24 @@ export const cartSlice = createSlice({
       });
       localStorage.setItem("cart", JSON.stringify(newCart));
     },
+    clearCart: (state, action) => {
+      localStorage.setItem("cart", "[]");
+      return [];
+    },
   },
 });
 
-export const { productSave, productRemove, removeById, changeQuantity } =
-  cartSlice.actions;
+export const {
+  productSave,
+  productRemove,
+  removeById,
+  changeQuantity,
+  clearCart,
+} = cartSlice.actions;
+
+export const sendOrderData = () => (dispatch) => {
+  // .... *code that sends all products from cart to database*
+  dispatch(clearCart());
+};
 
 export default cartSlice.reducer;

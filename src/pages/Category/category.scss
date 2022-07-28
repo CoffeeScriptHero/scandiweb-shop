@@ -3,6 +3,7 @@
 
 .category {
   margin-top: calc(79px + 80px);
+  margin-bottom: 50px;
   &__title {
     @include textParameters($size: 42px, $lineHeight: 67.2px);
     margin-bottom: 100px;
