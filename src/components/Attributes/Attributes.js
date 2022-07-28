@@ -8,6 +8,7 @@ class Attributes extends Component {
       selectedAttrs = null,
       onClick = null,
       inMinicart = false,
+      overflowAttrs = false,
     } = this.props;
 
     const sizeClass = inMinicart
@@ -16,12 +17,16 @@ class Attributes extends Component {
 
     const attributesList = attributes.map((a) => {
       return (
-        <div className={`attribute ${sizeClass}`} key={a.id} onClick={onClick}>
+        <div
+          className={`attribute ${sizeClass}`}
+          key={a.name}
+          onClick={onClick}
+        >
           <h6 className={`attribute__title ${sizeClass}`}>{a.name}:</h6>
           <div className="attribute__content">
             {a.items.map((i, index) => (
               <div
-                key={i.id}
+                key={index}
                 data-name={a.name}
                 data-type={a.type}
                 data-value={i.value}
@@ -62,9 +67,9 @@ class Attributes extends Component {
 
     return (
       <div
-        className={`attributes ${inMinicart ? "" : "attributes__type-cart"} ${
-          inMinicart ? "attributes__type-minicart" : ""
-        }`}
+        className={`attributes ${
+          overflowAttrs ? "attributes__type-cart" : ""
+        } ${inMinicart ? "attributes__type-minicart" : ""}`}
       >
         {attributesList}
       </div>

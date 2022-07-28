@@ -7,6 +7,7 @@ import { getProducts } from "../../services/requests";
 import { connect } from "react-redux";
 import { withParams } from "../../services/routerHooks";
 import Products from "../../components/Products/Products";
+import NotFound from "../NotFound/NotFound";
 
 class Category extends Component {
   state = {
@@ -26,6 +27,7 @@ class Category extends Component {
   fetchData = () => {
     const path = this.props.params["*"];
     getProducts(path).then((res) => {
+      console.log(res.data.category);
       if (res.data.category) {
         this.setData(res.data.category.products);
       } else {
@@ -53,7 +55,7 @@ class Category extends Component {
 
     if (this.state.isLoading) return <Loader />;
     if (!this.state.categoryExist) {
-      return <p>Not found!</p>;
+      return <NotFound />;
     }
 
     return (

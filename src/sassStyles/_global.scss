@@ -53,6 +53,14 @@
 
 @font-face {
   font-family: "Roboto Condensed";
+  font-weight: 400;
+  src: local("Roboto Condensed"),
+    url("../assets/fonts/Roboto Condensed/RobotoCondensed-Regular.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "Roboto Condensed";
   font-weight: 700;
   src: local("Roboto Condensed"),
     url("../assets/fonts/Roboto Condensed/RobotoCondensed-Bold.woff")

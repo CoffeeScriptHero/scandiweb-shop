@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Loader from "../../components/Loader/Loader";
-import { getProduct, getProducts } from "../../services/requests";
+import { getProduct, getProductAtts } from "../../services/requests";
 import { withParams } from "../../services/routerHooks";
 import { productSave, productRemove } from "../../store/reducers/cart.slice";
 import { setCategory } from "../../store/reducers/category.slice";
@@ -9,6 +9,7 @@ import "./product.scss";
 import Icon from "../../components/Icon/Icon";
 import Attributes from "../../components/Attributes/Attributes";
 import { deepEqual } from "../../services/helpers";
+import NotFound from "../NotFound/NotFound";
 
 class Product extends Component {
   state = {
@@ -76,9 +77,14 @@ class Product extends Component {
     getProduct(id).then((res) => {
       const product = res.data.product;
 
+      if (!product) {
+        this.setState({ isLoading: false, product });
+        return;
+      }
+
       if (!categories.length) {
         // highlights category in header if we followed the link of the product (not opened it from category page)
-        setCategory(product.category ? product.category : null);
+        setCategory(product.category);
       }
 
       product.attributes.forEach((a) => {
@@ -110,6 +116,12 @@ class Product extends Component {
   };
 
   componentDidUpdate(prevProps) {
+    const description = document.querySelector(
+      ".product-page__info-description"
+    );
+
+    if (description) description.innerHTML = this.state.product.description;
+
     if (prevProps.params.id !== this.props.params.id) {
       this.setPageParameters();
     }
@@ -121,27 +133,16 @@ class Product extends Component {
 
   render() {
     if (this.state.isLoading) return <Loader />;
-    if (!this.state.isLoading && !this.state.product) return <p>Not found</p>;
+    if (!this.state.isLoading && !this.state.product) return <NotFound />;
 
     const { cart, currency } = this.props;
-    const {
-      id,
-      brand,
-      name,
-      gallery,
-      prices,
-      attributes,
-      description,
-      inStock,
-    } = this.state.product;
+    const { id, brand, name, gallery, prices, attributes, inStock } =
+      this.state.product;
 
     const selectedAttributes = this.state.attributes;
 
     const price = prices.filter((p) => p.currency.symbol === currency)[0]
       .amount;
-
-    const descriptionElement = document.createElement("div");
-    descriptionElement.innerHTML = description;
 
     const inCart = cart.filter(
       (p) => p.id === id && deepEqual(p.attributes, selectedAttributes)
@@ -221,7 +222,7 @@ class Product extends Component {
             <p className="product-page__info-out-of-stock">Out of stock</p>
           )}
           <div className="product-page__info-description">
-            {descriptionElement.textContent}
+            {/* {descriptionElement.textContent} */}
           </div>
         </div>
       </div>
@@ -231,7 +232,7 @@ class Product extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart.cart,
+    cart: state.cart,
     currency: state.currency.currency,
     categories: state.category.categories,
   };

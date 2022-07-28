@@ -17,7 +17,6 @@ class Minicart extends Component {
 
   closeHandler = (e) => {
     const modalContent = this.contentRef.current;
-
     if (!modalContent.contains(e.target) && e.target !== modalContent) {
       this.props.closeMinicart();
     }
@@ -56,7 +55,7 @@ class Minicart extends Component {
         changeQuantity={changeQuantity}
         selectedAttrs={cart[i].attributes}
         quantity={cart[i].quantity}
-        closeMinicart={closeMinicart}
+        linkHandler={closeMinicart}
         inMinicart={true}
         product={p}
         currency={currency}
@@ -118,7 +117,7 @@ class Minicart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart.cart,
+    cart: state.cart,
     currency: state.currency.currency,
   };
 };

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getProduct } from "../../services/requests";
 import { connect } from "react-redux";
 import CartProduct from "../../components/СartProduct/CartProduct";
+import { setCategory } from "../../store/reducers/category.slice";
 import { changeQuantity } from "../../store/reducers/cart.slice";
 import Loader from "../../components/Loader/Loader";
 import "./cart.scss";
@@ -27,6 +28,7 @@ class Cart extends Component {
 
   componentDidMount() {
     this.fetchProducts();
+    this.props.setCategory(null);
   }
 
   render() {
@@ -79,6 +81,7 @@ class Cart extends Component {
                   {tax}
                 </span>
                 <span className="cart__order-info-value">{totalQuantity}</span>
+                {/* tax can be separated from the total price */}
                 <span className="cart__order-info-value">
                   {currency}
                   {totalPrice}
@@ -96,10 +99,11 @@ class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { cart: state.cart.cart, currency: state.currency.currency };
+  return { cart: state.cart, currency: state.currency.currency };
 };
 
 const mapDispatchToProps = {
+  setCategory,
   changeQuantity,
 };
 

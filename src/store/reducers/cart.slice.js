@@ -5,31 +5,30 @@ const localCart = JSON.parse(localStorage.getItem("cart"));
 
 export const cartSlice = createSlice({
   name: "cart",
-  initialState: { cart: localCart || [], totalPrice: 0 },
+  initialState: localCart || [],
   reducers: {
     productSave: (state, action) => {
-      const newCart = [...state.cart, action.payload];
+      const newCart = [...state, action.payload];
       localStorage.setItem("cart", JSON.stringify(newCart));
-      state.cart = newCart;
+      return [...newCart];
     },
     productRemove: (state, action) => {
-      const newCart = state.cart.filter(
+      const newCart = state.filter(
         (p) =>
           p.id !== action.payload.id ||
           !deepEqual(p.attributes, action.payload.attributes)
       );
       localStorage.setItem("cart", JSON.stringify(newCart));
-      state.cart = newCart;
+      return [...newCart];
     },
     removeById: (state, action) => {
-      const newCart = state.cart.filter((p) => p.id !== action.payload);
+      const newCart = state.filter((p) => p.id !== action.payload);
       localStorage.setItem("cart", JSON.stringify(newCart));
-      state.cart = newCart;
+      return [...newCart];
     },
     changeQuantity: (state, action) => {
       const { id, attributes, type } = action.payload;
-
-      const newCart = state.cart.map((p) => {
+      const newCart = state.map((p) => {
         if (p.id === id && deepEqual(p.attributes, attributes)) {
           const value = type === "increment" ? 1 : -1;
           p.quantity += value;
@@ -37,7 +36,6 @@ export const cartSlice = createSlice({
         return p;
       });
       localStorage.setItem("cart", JSON.stringify(newCart));
-      state.cart = newCart;
     },
   },
 });

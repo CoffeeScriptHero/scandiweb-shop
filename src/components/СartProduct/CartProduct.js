@@ -84,6 +84,7 @@ class CartProduct extends Component {
             attributes={attributes}
             inMinicart={inMinicart}
             onClick={this.attributesHandler}
+            overflowAttrs={inMinicart ? false : true}
           />
         </div>
         <div

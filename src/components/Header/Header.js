@@ -26,6 +26,7 @@ class Header extends Component {
 
   handleClick = (e) => {
     if (e.target.tagName === "A") {
+      this.closeMinicart();
       const activeClass = "header__content-category---active";
       const activeLink = document.querySelector(`.${activeClass}`);
       if (activeLink) activeLink.classList.remove(activeClass);
@@ -44,11 +45,11 @@ class Header extends Component {
   }
 
   render() {
-    const { category, cart } = this.props;
+    const { category, categories, currencies, cart } = this.props;
 
     const totalQuantity = cart.reduce((prev, cur) => prev + cur.quantity, 0);
 
-    const categoriesList = this.props.categories.map((c, i) => {
+    const categoriesList = categories.map((c, i) => {
       return (
         <Link
           to={`/${c}`}
@@ -62,7 +63,7 @@ class Header extends Component {
       );
     });
 
-    const currenciesList = this.props.currencies.map((c) => ({
+    const currenciesList = currencies.map((c) => ({
       value: c.symbol,
       content: `${c.symbol} ${c.label}`,
     }));
@@ -111,7 +112,7 @@ const mapStateToProps = (state) => {
     currencies: state.currency.currencies,
     categories: state.category.categories,
     category: state.category.category,
-    cart: state.cart.cart,
+    cart: state.cart,
   };
 };
 
