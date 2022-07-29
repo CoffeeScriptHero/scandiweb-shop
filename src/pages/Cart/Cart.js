@@ -66,7 +66,7 @@ class Cart extends Component {
         <h1 className="cart__title">Cart</h1>
         {!isLoading && !products.length && !orderDone && (
           <div className="cart__empty">
-            <img className="cart__empty-img" src={cartSvg} />
+            <img className="cart__empty-img" src={cartSvg} alt={"dummy cart"} />
             <h1 className="cart__empty-title">Cart is empty</h1>
             <span className="cart__empty-text">
               But it's never too late to change that :)

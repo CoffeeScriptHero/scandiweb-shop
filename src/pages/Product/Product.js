@@ -155,7 +155,7 @@ class Product extends Component {
             i === 0 ? "product-page__aside-img--active" : ""
           }`}
           src={img}
-          alt="aside product image"
+          alt="aside product"
         />
       </div>
     ));
@@ -193,7 +193,7 @@ class Product extends Component {
           <img
             className="product-page__img"
             src={this.state.imageToShow}
-            alt="main product image"
+            alt="main product"
           />
         </div>
         <div className="product-page__info">

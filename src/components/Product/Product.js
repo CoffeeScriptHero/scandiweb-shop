@@ -1,4 +1,4 @@
-import React, { Component, createRef, PureComponent } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../Icon/Icon";
 import "./product.scss";

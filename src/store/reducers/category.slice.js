@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { client } from "../../index";
-import { GET_CATEGORIES_NAMES, GET_PRODUCT } from "../../queries/categories";
+import { GET_CATEGORIES_NAMES } from "../../queries/categories";
 
 export const categorySlice = createSlice({
   name: "category",

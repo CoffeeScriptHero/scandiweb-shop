@@ -132,7 +132,7 @@ class CartProduct extends Component {
             <img
               className="cart-item__image"
               src={gallery[this.state.imageIndex]}
-              alt="product image"
+              alt="product"
             />
           </Link>
           {!inMinicart && gallery.length > 1 && (
