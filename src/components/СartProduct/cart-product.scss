@@ -15,16 +15,16 @@
     @include textParameters($weight: 300, $lineHeight: 25.6px);
   }
   &__info-name {
-    display: block;
+    display: inline-block;
     &:hover {
       text-decoration: underline;
     }
   }
   &__info-price {
+    display: block;
     margin-top: 5px;
     margin-bottom: 7px;
     @include textParameters($weight: 500, $lineHeight: 26px);
-    display: inline-block;
   }
   &__quantity-adjustment {
     display: flex;
